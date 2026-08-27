@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lakshy Tutorial | Premium App Portal</title>
+    <title>Student Tutorial | Premium App Portal</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,11 +17,11 @@
             --text-light: #f8fafc; 
             --text-dim: #94a3b8;
             --border-dark: #2a344d;
-            --theme-primary: #ff6b00; /* Richer Electric Orange */
+            --theme-primary: #ff6b00; 
             --theme-primary-hover: #e05e00;
             --pure-white: #ffffff;
             --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            --theme-accent: #00e5ff; /* Vibrant Cyan Accent */
+            --theme-accent: #00e5ff; 
             --green-wa: #10b981;
         }
 
@@ -40,6 +40,20 @@
         @keyframes spinRotate { 100% { transform: rotate(360deg); } }
         @keyframes popUp { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* ================= OFFLINE OVERLAY ================= */
+        .offline-overlay {
+            position: fixed; inset: 0; background: rgba(9, 13, 22, 0.98); backdrop-filter: blur(12px);
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 999999; text-align: center; padding: 25px;
+        }
+        .offline-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+        .offline-box i { font-size: 5rem; color: #ff3333; margin-bottom: 20px; animation: pulseIcon 2s infinite; }
+        .offline-box h2 { font-size: 2.2rem; color: #fff; margin-bottom: 10px; letter-spacing: 2px;}
+        .offline-box p { color: #94a3b8; font-size: 1.05rem; margin-bottom: 30px; text-transform: none; max-width: 350px; line-height: 1.5;}
+        .offline-btn { background: var(--theme-primary); color: #fff; border: none; padding: 14px 35px; border-radius: 30px; font-size: 1.1rem; font-weight: 700; cursor: pointer; box-shadow: 0 10px 25px rgba(255, 107, 0, 0.4); transition: 0.3s;}
+        .offline-btn:hover { transform: translateY(-3px); background: var(--theme-primary-hover); }
 
         /* ================= SPLASH SCREEN ================= */
         .splash-screen {
@@ -61,7 +75,7 @@
         }
         .splash-logo-box {
             width: 120px; height: 120px; border-radius: 50%; border: 3px solid #ffffff; 
-            background: url('logo.png') center/contain no-repeat; background-color: #fff;
+            background: url('s.png') center/contain no-repeat; background-color: #fff;
             box-shadow: 0 0 30px rgba(0, 229, 255, 0.4); z-index: 2;
         }
         .splash-text { color: #fff; font-size: 2.5rem; margin-top: 25px; letter-spacing: 3px; text-shadow: 0 0 15px rgba(255,255,255,0.3); }
@@ -74,7 +88,7 @@
         .custom-alert-box p { font-size: 1.1rem; font-weight: 600; margin-bottom: 25px; line-height: 1.4; text-transform: none;}
         .custom-alert-btn { background: var(--theme-primary); color: #fff; border: none; padding: 12px 30px; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: 0.3s; }
         
-        /* ================= HEADER & TOP NAV (LOGO ON RIGHT) ================= */
+        /* ================= HEADER & TOP NAV ================= */
         nav { 
             position: fixed; top: 0; width: 100%; height: 75px; background: var(--bg-header); backdrop-filter: blur(12px); 
             display: flex; align-items: center; justify-content: space-between; padding: 0 5%; border-bottom: 2px solid var(--theme-primary); z-index: 2500; 
@@ -91,7 +105,6 @@
         .brand-name { font-size: 1.35rem; font-weight: 700; color: var(--pure-white); }
         .brand-subtitle { font-size: 0.65rem; color: var(--theme-accent); font-weight: 800; margin-top: 2px; letter-spacing: 1.5px;}
 
-        /* RIGHT SIDE LOGO WRAPPER IN TOP NAV */
         .nav-right-logo {
             position: relative; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; cursor: pointer;
         }
@@ -103,7 +116,7 @@
         }
         .top-nav-logo-box {
             width: 40px; height: 40px; border-radius: 50%; border: 2px solid #ffffff;
-            background: url('logo.png') center/contain no-repeat; background-color: #fff; z-index: 2;
+            background: url('s.png') center/contain no-repeat; background-color: #fff; z-index: 2;
         }
 
         /* ================= MARQUEE ================= */
@@ -112,55 +125,63 @@
         .marquee-text span { margin: 0 30px; }
         @keyframes scrollMarquee { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
-        /* ================= SIDEBAR MENU (CLEANED UP HEADER) ================= */
+        /* ================= HAMBURGER MENU ================= */
         .sidebar { 
-            position: fixed; top: 0; left: -320px; width: 320px; height: 100vh; 
+            position: fixed; top: 0; left: -320px; width: 300px; height: 100vh; 
             background: var(--bg-gradient); border-right: 3px solid var(--theme-primary); 
             display: flex; flex-direction: column; transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            z-index: 2000; overflow-y: auto; box-shadow: 15px 0 40px rgba(0,0,0,0.8);
-            padding-top: 75px; padding-bottom: 30px;
+            z-index: 2000; overflow-y: auto; box-shadow: 20px 0 50px rgba(0,0,0,0.9);
+            padding-top: 20px; padding-bottom: 30px;
         }
         .sidebar.active { left: 0; }
-        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar { width: 3px; }
         .sidebar::-webkit-scrollbar-thumb { background: var(--theme-primary); border-radius: 4px; }
         
-        /* CLEAN HEADER - ONLY LAKSHY TUTORIAL */
-        .sidebar-header { padding: 25px 20px; border-bottom: 2px solid var(--border-dark); text-align: center; background: rgba(0,0,0,0.3); }
-        .sidebar-header h3 { color: var(--pure-white); font-size: 1.8rem; font-weight: 800; letter-spacing: 1.5px; }
-        .sidebar-header p { color: var(--theme-accent); font-size: 0.75rem; font-weight: 700; margin-top: 4px; letter-spacing: 2px;}
+        .sidebar-header { padding: 10px 15px; text-align: right; border-bottom: 1px solid var(--border-dark); }
+        .sidebar-close-btn { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+
+        .sidebar-section-title { color: var(--theme-accent); font-size: 0.7rem; padding: 15px 15px 6px; font-weight: 800; letter-spacing: 1.2px; }
         
-        .sidebar-section-title { color: var(--theme-accent); font-size: 0.8rem; padding: 20px 20px 10px; font-weight: 800; letter-spacing: 1px; }
+        .sidebar ul { list-style: none; padding: 0 12px; }
+        .sidebar ul li { margin-bottom: 6px; } 
         
-        .sidebar ul { list-style: none; padding: 0 15px; margin-bottom: 10px;}
-        .sidebar ul li { margin-bottom: 10px; } 
         .sidebar ul li a { 
-            display: flex; align-items: center; gap: 15px; color: var(--pure-white); text-decoration: none; 
-            font-size: 0.95rem; padding: 12px 18px; font-weight: 700; border-radius: 8px; transition: 0.3s; 
-            background: rgba(21, 28, 47, 0.8); border: 1px solid transparent;
+            display: flex; align-items: center; gap: 12px; color: var(--pure-white); text-decoration: none; 
+            font-size: 0.9rem; padding: 10px 14px; font-weight: 700; border-radius: 8px; transition: 0.3s; 
+            background: rgba(21, 28, 47, 0.6); border: 1px solid rgba(255,255,255,0.03);
         }
-        .sidebar ul li a i { color: var(--theme-primary); width: 25px; text-align: center; font-size: 1.1rem;}
-        .sidebar ul li a:hover { background: #090d16; border-color: var(--theme-accent); transform: translateX(5px); }
+        
+        .sidebar ul li a i { 
+            background: rgba(255, 107, 0, 0.15); color: var(--theme-primary); 
+            width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; 
+            border-radius: 50%; font-size: 0.85rem; transition: 0.3s; flex-shrink: 0;
+            border: 1px solid rgba(255, 107, 0, 0.3);
+        }
+        .sidebar ul li a:hover { 
+            background: #151c2f; border-color: var(--theme-accent); transform: translateX(4px); 
+        }
+        .sidebar ul li a:hover i { background: var(--theme-primary); color: #fff; }
 
         .sidebar-contact { 
-            padding: 20px; margin: 0 15px 15px; background: rgba(0,0,0,0.4); 
-            border-radius: 12px; border: 1px solid var(--theme-primary); 
+            padding: 12px; margin: 4px 12px 0; background: rgba(0,0,0,0.4); 
+            border-radius: 10px; border: 1px solid var(--border-dark); 
         }
         .sidebar-contact .contact-item { 
-            color: #f8fafc; font-size: 0.9rem; margin-bottom: 20px; 
-            display: flex; align-items: center; gap: 15px; text-transform: none;
-            padding-bottom: 15px; border-bottom: 1px dashed rgba(255,255,255,0.15);
+            color: #f8fafc; font-size: 0.82rem; margin-bottom: 10px; 
+            display: flex; align-items: center; gap: 12px; text-transform: none;
+            padding-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1);
         }
         .sidebar-contact .contact-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
         .sidebar-contact .contact-item i { 
-            background: var(--theme-primary); color: #fff; width: 35px; height: 35px; 
+            background: var(--theme-primary); color: #fff; width: 30px; height: 30px; 
             display: flex; justify-content: center; align-items: center; border-radius: 50%; 
-            font-size: 1.1rem; flex-shrink: 0; box-shadow: 0 3px 10px rgba(255,107,0,0.4);
+            font-size: 0.9rem; flex-shrink: 0; box-shadow: 0 3px 8px rgba(255,107,0,0.4);
         }
 
         .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); opacity: 0; visibility: hidden; transition: 0.3s; z-index: 1500; }
         .overlay.active { opacity: 1; visibility: visible; }
 
-        /* ================= 6 BANNER SLIDER & DOTS ================= */
+        /* ================= 6 BANNER SLIDER ================= */
         .slider-section { padding: 20px 0 10px; position: relative; }
         .slider-wrapper { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; padding: 0 5%; scrollbar-width: none; scroll-behavior: smooth; }
         .slider-wrapper::-webkit-scrollbar { display: none; }
@@ -188,15 +209,57 @@
 
         .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
 
-        .course-card { background: linear-gradient(145deg, #151c2f, #090d16); border-radius: 16px; border: 1px solid var(--border-dark); box-shadow: var(--card-shadow); overflow: hidden; position: relative; transition: 0.3s; }
+        .course-card { 
+            background: linear-gradient(145deg, #151c2f, #090d16); 
+            border-radius: 16px; 
+            border: 1px solid var(--border-dark); 
+            box-shadow: var(--card-shadow); 
+            overflow: hidden; /* Ensures image doesn't break rounded corners */
+            position: relative; 
+            transition: 0.3s; 
+            display: flex;
+            flex-direction: column;
+        }
         .course-card:hover { border-color: var(--theme-accent); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0, 229, 255, 0.15);}
         
         .badge-live { position: absolute; top: 10px; left: 10px; background: var(--theme-primary); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; z-index: 10; display: flex; align-items: center; gap: 5px; animation: blink 2s infinite; }
         .badge-tag { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.75); color: var(--theme-accent); padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: 800; z-index: 10; border: 1px solid var(--theme-accent);}
 
-        /* 🔥 STRICT 1000x500 PX COURSE BANNER (2:1 ASPECT RATIO) 🔥 */
-        .course-img-box { position: relative; width: 100%; aspect-ratio: 2 / 1; background: #000; border-bottom: 3px solid var(--theme-accent); overflow: hidden;}
-        .course-slide-img { width: 100%; height: 100%; object-fit: cover; }
+        /* ================= FULL SIZE A4 COURSE BANNER ================= */
+        .course-slider-container { 
+            position: relative; 
+            width: 100%; 
+            padding: 0; /* Important: removes side padding to make it full width */
+        }
+        
+        .course-banner-wrapper { 
+            width: 100%; 
+            max-width: 100%; /* Spans full card width */
+            aspect-ratio: 1 / 1.414; /* A4 aspect ratio */
+            margin: 0;
+            border-radius: 16px 16px 0 0; /* Rounds top corners to match card */
+            border: none; 
+            border-bottom: 3px solid var(--theme-accent); 
+            background: #000; overflow-x: auto; overflow-y: hidden; position: relative; 
+            scroll-snap-type: x mandatory; scrollbar-width: none; 
+        }
+        .course-banner-wrapper::-webkit-scrollbar { display: none; }
+        .course-banner-track { display: flex; width: 200%; height: 100%; }
+        .course-banner-track img { 
+            width: 50%; /* Since track is 200%, 50% equals full wrapper width */
+            height: 100%; 
+            object-fit: fill; /* Forces image to stretch and cover entirely */
+            display: block; 
+            scroll-snap-align: start; 
+        }
+        
+        .course-swipe-hint {
+            position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.7); color: var(--pure-white);
+            padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 800; pointer-events: none; z-index: 5; border: 1px solid var(--theme-accent); letter-spacing: 1px;
+        }
+        .course-slider-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 5; background: rgba(0,0,0,0.5); padding: 4px 10px; border-radius: 12px; backdrop-filter: blur(2px);}
+        .course-slider-dots .dot { width: 8px; height: 8px; background: rgba(255, 255, 255, 0.6); border-radius: 50%; transition: 0.3s ease; }
+        .course-slider-dots .dot.active { background: var(--theme-primary); width: 22px; border-radius: 10px; }
         
         .course-info { padding: 20px; }
         .course-title { font-size: 1.5rem; font-weight: 700; color: var(--theme-accent); line-height: 1.2; margin-bottom: 5px;}
@@ -257,10 +320,20 @@
 </head>
 <body>
 
+    <!-- OFFLINE OVERLAY -->
+    <div id="offlineOverlay" class="offline-overlay">
+        <div class="offline-box">
+            <i class="fas fa-wifi-slash"></i>
+            <h2>NO INTERNET CONNECTION</h2>
+            <p>Please check your network settings. Student Tutorial needs an active internet connection.</p>
+            <button class="offline-btn" onclick="checkConnection()">RETRY CONNECTION</button>
+        </div>
+    </div>
+
     <!-- SPLASH SCREEN -->
     <div id="splashScreen" class="splash-screen">
         <div class="splash-logo-wrapper"><div class="splash-logo-box"></div></div>
-        <h2 class="splash-text">LAKSHY TUTORIAL</h2>
+        <h2 class="splash-text">STUDENT TUTORIAL</h2>
         <p class="splash-sub">YOUR GATEWAY TO SUCCESS</p>
     </div>
 
@@ -273,15 +346,15 @@
         </div>
     </div>
 
-    <!-- TOP NAVIGATION (LOGO ON THE RIGHT) -->
+    <!-- TOP NAVIGATION -->
     <nav>
         <div class="nav-left">
             <div class="ham-custom" id="hamMenu" onclick="toggleMenu()">
                 <div class="line line1"></div><div class="line line2"></div><div class="line line3"></div>
             </div>
             <div class="brand-container">
-                <div class="brand-name">LAKSHY TUTORIAL</div>
-                <div class="brand-subtitle">LEARNING PLATFORM</div>
+                <div class="brand-name">STUDENT TUTORIAL</div>
+                <div class="brand-subtitle">THE PATH OF EXCELLENCE</div>
             </div>
         </div>
         <div class="nav-right-logo" onclick="showInactiveAlert()">
@@ -293,17 +366,16 @@
     <div class="marquee-container">
         <div class="marquee-text">
             <span><i class="fas fa-star"></i> SANKALP & LAKSHYA BATCH STARTING SOON</span>
-            <span><i class="fas fa-fire"></i> FLAT 50% OFF USING CODE 'LAKSHY50'</span>
-            <span><i class="fas fa-bullhorn"></i> NEW 1000x500 WIDE BANNERS LIVE NOW</span>
+            <span><i class="fas fa-fire"></i> FLAT 50% OFF USING CODE 'STUDENT50'</span>
+            <span><i class="fas fa-bullhorn"></i> NEW A4 BANNERS LIVE NOW</span>
         </div>
     </div>
 
-    <!-- SIDEBAR WITH CLEANED UP HEADER & SPACING -->
+    <!-- HAMBURGER MENU -->
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h3>LAKSHY TUTORIAL</h3>
-            <p>APP NAVIGATION</p>
+            <button class="sidebar-close-btn" onclick="toggleMenu()">&times;</button>
         </div>
         
         <div class="sidebar-section-title">QUICK LINKS</div>
@@ -326,31 +398,31 @@
             <div class="contact-item">
                 <i class="fas fa-phone-alt"></i>
                 <div>
-                    <strong style="display:block; color:#fff;">CALL US</strong>
+                    <strong style="display:block; color:#fff; font-size:0.75rem; letter-spacing:0.5px;">CALL US</strong>
                     +91 9670078465
                 </div>
             </div>
             <div class="contact-item">
                 <i class="fab fa-whatsapp" style="background: #25D366;"></i>
                 <div>
-                    <strong style="display:block; color:#fff;">WHATSAPP</strong>
+                    <strong style="display:block; color:#fff; font-size:0.75rem; letter-spacing:0.5px;">WHATSAPP</strong>
                     +91 9670078465
                 </div>
             </div>
             <div class="contact-item">
                 <i class="fas fa-envelope"></i>
                 <div>
-                    <strong style="display:block; color:#fff;">EMAIL ID</strong>
+                    <strong style="display:block; color:#fff; font-size:0.75rem; letter-spacing:0.5px;">EMAIL ID</strong>
                     abhinaychaubey83@gmail.com
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 6 BANNER SLIDER & SYNCED DOTS -->
+    <!-- 6 BANNER SLIDER -->
     <section class="slider-section">
         <div class="slider-wrapper" id="mainSliderWrapper">
-            <div class="banner-slide" style="background-image: url('slider1.png');"></div>
+            <div class="banner-slide" style="background-image: url('maths.png');"></div>
             <div class="banner-slide" style="background-image: url('slider2.png');"></div>
             <div class="banner-slide" style="background-image: url('slider3.png');"></div>
             <div class="banner-slide" style="background-image: url('slider4.png');"></div>
@@ -363,7 +435,7 @@
         </div>
     </section>
 
-    <!-- ================= 8 COURSES GRID (1000x500 PX BANNER) ================= -->
+    <!-- 8 COURSES GRID -->
     <section class="courses-section">
         <div class="section-header"><h2>PREMIUM <span>BATCHES</span></h2></div>
         <div class="courses-grid">
@@ -371,10 +443,23 @@
             <!-- CARD 1 -->
             <div class="course-card">
                 <div class="badge-live"><i class="fas fa-circle"></i> LIVE</div>
-                <div class="badge-tag">JNVST VI/IX</div>
-                <div class="course-img-box"><img src="maths.png" alt="Maths Special" class="course-slide-img" onerror="this.src='https://via.placeholder.com/1000x500?text=MATHS+SPECIAL+1000x500'"></div>
+                <div class="badge-tag">JNVST VI-IX</div>
+                
+                <div class="course-slider-container">
+                    <div class="course-swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
+                    <div class="course-banner-wrapper" onscroll="updateCourseDots(this)">
+                        <div class="course-banner-track">
+                            <img src="maths_1.png" alt="Banner 1" onerror="this.src='a.png'">
+                            <img src="maths_2.png" alt="Banner 2" onerror="this.src='a.png'">
+                        </div>
+                    </div>
+                    <div class="course-slider-dots">
+                        <span class="dot active"></span><span class="dot"></span>
+                    </div>
+                </div>
+
                 <div class="course-info">
-                    <h3 class="course-title">MATHS SPECIAL 1.0</h3>
+                    <h3 class="course-title">MATHEMATICS SPECIAL COURSE </h3>
                     <p class="course-faculty">BY ABHINAY CHAUBEY</p>
                     <div class="btn-group">
                         <button class="btn-features" onclick="toggleFeatures(this)">FEATURES <i class="fas fa-chevron-down"></i></button>
@@ -391,15 +476,28 @@
 
             <!-- CARD 2 -->
             <div class="course-card">
-                <div class="badge-live"><i class="fas fa-circle"></i> NEW</div>
-                <div class="badge-tag">JNVST / VI</div>
-                <div class="course-img-box"><img src="maths.png" alt="Prakram Batch" class="course-slide-img" onerror="this.src='https://via.placeholder.com/1000x500?text=PRAKRAM+BATCH+1000x500'"></div>
+                <div class="badge-live"><i class="fas fa-circle"></i></div>
+                <div class="badge-tag">JNVST-VI</div>
+                
+                <div class="course-slider-container">
+                    <div class="course-swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
+                    <div class="course-banner-wrapper" onscroll="updateCourseDots(this)">
+                        <div class="course-banner-track">
+                            <img src="lk_1.png" alt="Banner 1" onerror="this.src='lak.png'">
+                            <img src="lk_2.png" alt="Banner 2" onerror="this.src='lak.png'">
+                        </div>
+                    </div>
+                    <div class="course-slider-dots">
+                        <span class="dot active"></span><span class="dot"></span>
+                    </div>
+                </div>
+
                 <div class="course-info">
-                    <h3 class="course-title">JNVST FOUNDATION BATCH</h3>
-                    <p class="course-faculty">BY ABHINAY CHAUBEY AND FACULTIES</p>
+                    <h3 class="course-title">LAKSHY FOUNDATION 1.0 COURSE</h3>
+                    <p class="course-faculty">BY ABHINAY CHAUBEY</p>
                     <div class="btn-group">
                         <button class="btn-features" onclick="toggleFeatures(this)">FEATURES <i class="fas fa-chevron-down"></i></button>
-                        <button class="btn-buy" onclick="openPayment('JNVST VI', 2499)">ENROLL NOW</button>
+                        <button class="btn-buy" onclick="openPayment('LAKSHY VI', 2499)">ENROLL NOW</button>
                     </div>
                     <div class="features-box">
                         <ul>
@@ -413,14 +511,27 @@
             <!-- CARD 3 -->
             <div class="course-card">
                 <div class="badge-live"><i class="fas fa-circle"></i> NEW</div>
-                <div class="badge-tag">CLASS 9 BOARDS</div>
-                <div class="course-img-box"><img src="maths.png" alt="Sankalp Batch" class="course-slide-img" onerror="this.src='https://via.placeholder.com/1000x500?text=SANKALP+BATCH+1000x500'"></div>
+                <div class="badge-tag">UP/ CBSC-9Th</div>
+                
+                <div class="course-slider-container">
+                    <div class="course-swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
+                    <div class="course-banner-wrapper" onscroll="updateCourseDots(this)">
+                        <div class="course-banner-track">
+                            <img src="sankalp_1.png" alt="Banner 1" onerror="this.src='san.png'">
+                            <img src="sankalp_2.png" alt="Banner 2" onerror="this.src='san.png'">
+                        </div>
+                    </div>
+                    <div class="course-slider-dots">
+                        <span class="dot active"></span><span class="dot"></span>
+                    </div>
+                </div>
+
                 <div class="course-info">
-                    <h3 class="course-title">SANKALP FOUNDATION BATCH</h3>
-                    <p class="course-faculty">BY ABHINAY CHAUBEY AND FACULTIES</p>
+                    <h3 class="course-title">SANKALP FOUNDATION 1.0 BATCH</h3>
+                    <p class="course-faculty">BY ABHINAY CHAUBEY</p>
                     <div class="btn-group">
                         <button class="btn-features" onclick="toggleFeatures(this)">FEATURES <i class="fas fa-chevron-down"></i></button>
-                        <button class="btn-buy" onclick="openPayment('SANKALP BATCH', 3499)">ENROLL NOW</button>
+                        <button class="btn-buy" onclick="openPayment('SANKALP BATCH', 1499)">ENROLL NOW</button>
                     </div>
                     <div class="features-box">
                         <ul>
@@ -434,14 +545,27 @@
             <!-- CARD 4 -->
             <div class="course-card">
                 <div class="badge-live"><i class="fas fa-circle"></i> HOT</div>
-                <div class="badge-tag">CLASS 10 BOARDS</div>
-                <div class="course-img-box"><img src="maths.png" alt="Lakshya Batch" class="course-slide-img" onerror="this.src='https://via.placeholder.com/1000x500?text=LAKSHYA+BATCH+1000x500'"></div>
+                <div class="badge-tag">10TH BOARDS</div>
+                
+                <div class="course-slider-container">
+                    <div class="course-swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
+                    <div class="course-banner-wrapper" onscroll="updateCourseDots(this)">
+                        <div class="course-banner-track">
+                            <img src="samarth_1.png" alt="Banner 1" onerror="this.src='sam.png'">
+                            <img src="samarth_2.png" alt="Banner 2" onerror="this.src='sam.png'">
+                        </div>
+                    </div>
+                    <div class="course-slider-dots">
+                        <span class="dot active"></span><span class="dot"></span>
+                    </div>
+                </div>
+
                 <div class="course-info">
-                    <h3 class="course-title">LAKSHYA FOUNDATION BATCH</h3>
-                    <p class="course-faculty">BY ABHINAY CHAUBEY AND FACULTIES</p>
+                    <h3 class="course-title">SAMARTH FOUNDATION 1.0 BATCH</h3>
+                    <p class="course-faculty">BY ABHINAY CHAUBEY</p>
                     <div class="btn-group">
                         <button class="btn-features" onclick="toggleFeatures(this)">FEATURES <i class="fas fa-chevron-down"></i></button>
-                        <button class="btn-buy" onclick="openPayment('LAKSHYA BATCH', 3999)">ENROLL NOW</button>
+                        <button class="btn-buy" onclick="openPayment('SAMARTH BATCH', 2999)">ENROLL NOW</button>
                     </div>
                     <div class="features-box">
                         <ul>
@@ -455,18 +579,31 @@
             <!-- CARD 5 -->
             <div class="course-card">
                 <div class="badge-live"><i class="fas fa-circle"></i> NEW</div>
-                <div class="badge-tag">JNVST/ IX</div>
-                <div class="course-img-box"><img src="maths.png" alt="SSC CGL Batch" class="course-slide-img" onerror="this.src='https://via.placeholder.com/1000x500?text=SSC+CGL+TARGET+1000x500'"></div>
+                <div class="badge-tag">12TH</div>
+                
+                <div class="course-slider-container">
+                    <div class="course-swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
+                    <div class="course-banner-wrapper" onscroll="updateCourseDots(this)">
+                        <div class="course-banner-track">
+                            <img src="sarthi_1.png" alt="Banner 1" onerror="this.src='sar.png'">
+                            <img src="sarthi_2.png" alt="Banner 2" onerror="this.src='a.png'">
+                        </div>
+                    </div>
+                    <div class="course-slider-dots">
+                        <span class="dot active"></span><span class="dot"></span>
+                    </div>
+                </div>
+
                 <div class="course-info">
-                    <h3 class="course-title">JNVST FOUNDATION BATCH</h3>
+                    <h3 class="course-title">SARTHI FOUNDATION 1.0 COURSE</h3>
                     <p class="course-faculty">BY ABHINAY CHAUBEY</p>
                     <div class="btn-group">
                         <button class="btn-features" onclick="toggleFeatures(this)">FEATURES <i class="fas fa-chevron-down"></i></button>
-                        <button class="btn-buy" onclick="openPayment('JNVST IX', 2999)">ENROLL NOW</button>
+                        <button class="btn-buy" onclick="openPayment('SARTHI JNVST 9TH', 2999)">ENROLL NOW</button>
                     </div>
                     <div class="features-box">
                         <ul>
-                            <li><i class="fas fa-check-circle"></i> Pre + Mains Complete Syllabus Coverage.</li>
+                            <li><i class="fas fa-check-circle"></i> Complete Syllabus Coverage.</li>
                             <li><i class="fas fa-check-circle"></i> Advanced TCS Pattern Questions.</li>
                         </ul>
                     </div>
@@ -476,14 +613,27 @@
             <!-- CARD 6 -->
             <div class="course-card">
                 <div class="badge-live"><i class="fas fa-circle"></i> NEW</div>
-                <div class="badge-tag">REASONING ABILITIES</div>
-                <div class="course-img-box"><img src="maths.png" alt="NDA Batch" class="course-slide-img" onerror="this.src='https://via.placeholder.com/1000x500?text=NDA+FOUNDATION+1000x500'"></div>
+                <div class="badge-tag">JNVST IX</div>
+                
+                <div class="course-slider-container">
+                    <div class="course-swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
+                    <div class="course-banner-wrapper" onscroll="updateCourseDots(this)">
+                        <div class="course-banner-track">
+                            <img src="ar_1.png" alt="Banner 1" onerror="this.src='aaram.png'">
+                            <img src="ar_2.png" alt="Banner 2" onerror="this.src='logo.png'">
+                        </div>
+                    </div>
+                    <div class="course-slider-dots">
+                        <span class="dot active"></span><span class="dot"></span>
+                    </div>
+                </div>
+
                 <div class="course-info">
-                    <h3 class="course-title">REASONING SPECIAL 1.0</h3>
-                    <p class="course-faculty">BY ABHINAY CHAUBEY</p>
+                    <h3 class="course-title"> AARAMBH FOUNDATION BATCH</h3>
+                    <p class="course-faculty">BY ABHINAY CHAUBEY AND TEAM</p>
                     <div class="btn-group">
                         <button class="btn-features" onclick="toggleFeatures(this)">FEATURES <i class="fas fa-chevron-down"></i></button>
-                        <button class="btn-buy" onclick="openPayment('REASONING SPECIAL', 2599)">ENROLL NOW</button>
+                        <button class="btn-buy" onclick="openPayment('AARAMBH FOUNDATION', 4599)">ENROLL NOW</button>
                     </div>
                     <div class="features-box">
                         <ul>
@@ -498,17 +648,30 @@
             <div class="course-card">
                 <div class="badge-live"><i class="fas fa-circle"></i> LIVE</div>
                 <div class="badge-tag">11TH</div>
-                <div class="course-img-box"><img src="maths.png" alt="UP Police Batch" class="course-slide-img" onerror="this.src='https://via.placeholder.com/1000x500?text=UP+POLICE+1000x500'"></div>
+                
+                <div class="course-slider-container">
+                    <div class="course-swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
+                    <div class="course-banner-wrapper" onscroll="updateCourseDots(this)">
+                        <div class="course-banner-track">
+                            <img src="pr_1.png" alt="Banner 1" onerror="this.src='prak.png'">
+                            <img src="pr_2.png" alt="Banner 2" onerror="this.src='prak.png'">
+                        </div>
+                    </div>
+                    <div class="course-slider-dots">
+                        <span class="dot active"></span><span class="dot"></span>
+                    </div>
+                </div>
+
                 <div class="course-info">
-                    <h3 class="course-title">SARTHI FOUNDATION 1.0</h3>
+                    <h3 class="course-title">PRAKRAM FOUNDATION BATCH</h3>
                     <p class="course-faculty">BY ABHINAY CHAUBEY</p>
                     <div class="btn-group">
                         <button class="btn-features" onclick="toggleFeatures(this)">FEATURES <i class="fas fa-chevron-down"></i></button>
-                        <button class="btn-buy" onclick="openPayment('SARTHI FOUNDATION 11TH', 4999)">ENROLL NOW</button>
+                        <button class="btn-buy" onclick="openPayment('PRAKRAM FOUNDATION 12TH', 4999)">ENROLL NOW</button>
                     </div>
                     <div class="features-box">
                         <ul>
-                            <li><i class="fas fa-check-circle"></i> Special UP Police Exam Pattern Classes.</li>
+                            <li><i class="fas fa-check-circle"></i> Special  Exam Pattern Classes.</li>
                             <li><i class="fas fa-check-circle"></i> Super Fast Tricks to save time.</li>
                         </ul>
                     </div>
@@ -517,20 +680,33 @@
 
             <!-- CARD 8 -->
             <div class="course-card">
-                <div class="badge-live"><i class="fas fa-circle"></i> </div>
-                <div class="badge-tag">12TH</div>
-                <div class="course-img-box"><img src="maths.png" alt="Board Booster" class="course-slide-img" onerror="this.src='https://via.placeholder.com/1000x500?text=BOARD+BOOSTER+1000x500'"></div>
+                <div class="badge-live"><i class="fas fa-circle"></i> HOT</div>
+                <div class="badge-tag">REASONING</div>
+                
+                <div class="course-slider-container">
+                    <div class="course-swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
+                    <div class="course-banner-wrapper" onscroll="updateCourseDots(this)">
+                        <div class="course-banner-track">
+                            <img src="reason_1.png" alt="Banner 1" onerror="this.src='reasoning.png'">
+                            <img src="reason_2.png" alt="Banner 2" onerror="this.src='reasoning.png'">
+                        </div>
+                    </div>
+                    <div class="course-slider-dots">
+                        <span class="dot active"></span><span class="dot"></span>
+                    </div>
+                </div>
+
                 <div class="course-info">
-                    <h3 class="course-title">PRAVAH FOUNDATION 1.0 </h3>
+                    <h3 class="course-title">REASONING CRASH COURSE 1.0</h3>
                     <p class="course-faculty">BY ABHINAY CHAUBEY</p>
                     <div class="btn-group">
                         <button class="btn-features" onclick="toggleFeatures(this)">FEATURES <i class="fas fa-chevron-down"></i></button>
-                        <button class="btn-buy" onclick="openPayment('PRAVAH FOUNDATION 12TH', 5199)">ENROLL NOW</button>
+                        <button class="btn-buy" onclick="openPayment('REASONING', 799)">ENROLL NOW</button>
                     </div>
                     <div class="features-box">
                         <ul>
-                            <li><i class="fas fa-check-circle"></i> Calculus, Algebra, Vector 3D Mastery.</li>
-                            <li><i class="fas fa-check-circle"></i> VVI Questions for Board Exams.</li>
+                            <li><i class="fas fa-check-circle"></i> DICE ANALOGY MIRROR IMAGE VERBAL REASON..</li>
+                            <li><i class="fas fa-check-circle"></i> VVI Questions for  Exams.</li>
                         </ul>
                     </div>
                 </div>
@@ -542,15 +718,14 @@
     <!-- 5 BOTTOM APP NAVIGATION -->
     <div class="bottom-nav">
         <a href="#" class="nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="#" class="nav-item" onclick="showInactiveAlert(); return false;"><i class="fas fa-play-circle"></i><span>Live</span></a>
+        <a href="e.html" class="nav-item" onclick="toggle menu ( )"><i class="fas fa-book-open"></i><span>E- BOOK</span></a>
         
-        <!-- OPENS COURSE SELECTOR MODAL (QUICK PAY) -->
         <a href="#" class="nav-item qr-nav-btn" onclick="openQuickPay()">
             <i class="fas fa-qrcode"></i><span>Pay</span>
         </a>
 
-        <a href="#" class="nav-item" onclick="showInactiveAlert(); return false;"><i class="fas fa-file-alt"></i><span>Notes</span></a>
-        <a href="t.html" class="nav-item" onclick="showInactiveAlert(); return false;"><i class="fas fa-user-circle"></i><span>FACULTIES</span></a>
+        <a href="pdf.html" class="nav-item" onclick="toggle menu( )"><i class="fas fa-file-alt"></i><span>Notes</span></a>
+        <a href="t.html" class="nav-item" onclick="toggle menu( )"><i class="fas fa-user-circle"></i><span>FACULTIES</span></a>
     </div>
 
     <!-- ================= PAYMENT MODALS ================= -->
@@ -566,13 +741,13 @@
                     <label>CHOOSE YOUR BATCH</label>
                     <select id="courseSelector" onchange="calculateQuickPay()" style="background:#f8fafc; border:2px solid var(--theme-primary); color:#090d16;">
                         <option value="1999" data-name="MATHS SPECIAL 2.0">MATHS SPECIAL 2.0 - ₹1999</option>
-                        <option value="2499" data-name="PRAKRAM BATCH (JNVST)">PRAKRAM BATCH (JNVST) - ₹2499</option>
-                        <option value="1499" data-name="SANKALP BATCH">SANKALP BATCH - ₹1499</option>
-                        <option value="1999" data-name="LAKSHYA BATCH">LAKSHYA BATCH - ₹1999</option>
-                        <option value="2999" data-name="SSC CGL TARGET">SSC CGL TARGET - ₹2999</option>
-                        <option value="2599" data-name="NDA FOUNDATION">NDA FOUNDATION - ₹2599</option>
-                        <option value="999" data-name="UP POLICE CONSTABLE">UP POLICE CONSTABLE - ₹999</option>
-                        <option value="1799" data-name="BOARD BOOSTER 12TH">BOARD BOOSTER 12TH - ₹1799</option>
+                        <option value="2499" data-name="LAKSHAY (JNVST)">LAKSHY BATCH (JNVST) - ₹2499</option>
+                        <option value="1499" data-name="SANKALP BATCH">SANKALP BATCH 9TH - ₹2499</option>
+                        <option value="1999" data-name="SAMARTH">SAMARTH BATCH 10 - ₹3999</option>
+                        <option value="2999" data-name="SARTHI 9TH">SARTHI 9 JNV - ₹3999</option>
+                        <option value="2599" data-name="AARAMBH FOUNDATION">AARAMBH 11TH- ₹4599</option>
+                        <option value="999" data-name="PRAKRAM FOUNDATION 12TH">PRAKRAM 12TH- ₹4999</option>
+                        <option value="799" data-name="REASONING SPECIAL">REASONING SPECIAL- ₹799</option>
                     </select>
                 </div>
                 
@@ -609,7 +784,7 @@
                 <div class="scratch-section">
                     <span style="font-size:0.9rem; font-weight:800; color:var(--theme-accent); display:block; margin-bottom:10px;">SCRATCH FOR 50% OFF</span>
                     <div class="scratch-card-wrapper">
-                        <div class="scratch-card-base">LAKSHY50</div>
+                        <div class="scratch-card-base">STUDENT50</div>
                         <canvas id="scratchCanvas" width="260" height="60"></canvas>
                     </div>
                 </div>
@@ -634,7 +809,7 @@
                 <div class="input-group" style="margin-top:20px;">
                     <label>COUPON CODE (50% OFF)</label>
                     <div class="coupon-box">
-                        <input type="text" id="couponCode" placeholder="ENTER LAKSHY50">
+                        <input type="text" id="couponCode" placeholder="ENTER STUDENT50">
                         <button onclick="applyCoupon()">APPLY</button>
                     </div>
                     <span class="msg" id="couponMsg"></span>
@@ -651,6 +826,24 @@
     </div>
 
     <script>
+        // ================= JS SCRIPT FOR COURSE SWIPE DOTS =================
+        function updateCourseDots(el) {
+            const index = Math.round(el.scrollLeft / el.clientWidth);
+            const dots = el.parentElement.querySelectorAll('.course-slider-dots .dot');
+            dots.forEach(d => d.classList.remove('active'));
+            if(dots[index]) dots[index].classList.add('active');
+        }
+
+        // ================= OFFLINE / ONLINE CHECKER =================
+        const offlineOverlay = document.getElementById('offlineOverlay');
+        window.addEventListener('offline', () => { offlineOverlay.classList.add('active'); });
+        window.addEventListener('online', () => { offlineOverlay.classList.remove('active'); });
+        function checkConnection() {
+            if (navigator.onLine) { offlineOverlay.classList.remove('active'); }
+            else { alert("Still offline. Please check your WiFi or mobile data."); }
+        }
+        if (!navigator.onLine) { offlineOverlay.classList.add('active'); }
+
         // ================= SPLASH SCREEN REMOVE =================
         setTimeout(() => {
             const splash = document.getElementById('splashScreen');
@@ -770,7 +963,7 @@
 
         function generateDynamicQR() {
             const upiId = "77042892@axl";
-            const upiLink = `upi://pay?pa=${upiId}&pn=LakshyTutorial&cu=INR&am=${finalPrice}`;
+            const upiLink = `upi://pay?pa=${upiId}&pn=StudentTutorial&cu=INR&am=${finalPrice}`;
             const qrImg = document.getElementById('dynamicQrImage');
             qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(upiLink)}&margin=10`;
             qrImg.style.display = 'block';
@@ -781,7 +974,7 @@
             let msg = document.getElementById('couponMsg');
             if (couponApplied) { msg.innerText = "ALREADY APPLIED!"; msg.style.color = "red"; return; }
             
-            if (code === "LAKSHY50") {
+            if (code === "STUDENT50") {
                 finalPrice = Math.round(originalPrice * 0.50); // 50% DISCOUNT
                 document.getElementById('checkoutPrice').innerText = finalPrice;
                 msg.innerText = "COUPON APPLIED! 50% OFF."; msg.style.color = "green"; 
