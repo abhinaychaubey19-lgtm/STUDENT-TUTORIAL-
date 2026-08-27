@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JNVST Maths E-Books | Student Tutorial</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-main: #060913;
+            --bg-card: #101626;
+            --gold: #f59e0b;
+            --primary-orange: #ff5722;
+            --primary-hover: #e64a19;
+            --app-blue: #00bcd4;
+            --text-light: #ffffff;
+            --text-dim: #94a3b8;
+            --border-dark: #1e293b;
+            --red-brand: #ef4444;
+            --green-wa: #10b981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; text-transform: uppercase; }
+        
+        /* Bottom padding reduced because bottom nav is removed */
+        body { background-color: var(--bg-main); color: var(--text-light); overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; padding-bottom: 30px;}
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Oswald', sans-serif; letter-spacing: 1px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spinBorder { 100% { transform: rotate(360deg); } }
+
+        /* ========================================== */
+        /* --- HEADER --- */
+        /* ========================================== */
+        .portal-header {
+            background: var(--bg-card); border-bottom: 2px solid var(--primary-orange);
+            padding: 12px 5%; display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+        }
+        
+        .brand-container { display: flex; flex-direction: column; line-height: 1.1; }
+        .brand-name { font-size: 1.3rem; font-weight: 800; color: var(--pure-white); }
+        .brand-subtitle { font-size: 0.65rem; color: var(--app-blue); font-weight: 800; margin-top: 2px; letter-spacing: 1.5px;}
+
+        .nav-right-logo {
+            position: relative; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center;
+        }
+        .nav-right-logo::before {
+            content: ''; position: absolute; inset: -4px; border-radius: 50%;
+            border-top: 3px solid var(--app-blue); border-right: 3px solid transparent;
+            border-bottom: 3px solid var(--primary-orange); border-left: 3px solid transparent;
+            animation: spinBorder 3s linear infinite;
+        }
+        .top-nav-logo-box {
+            width: 100%; height: 100%; border-radius: 50%; border: 2px solid #ffffff;
+            background: url('logo.png') center/contain no-repeat; background-color: #fff; z-index: 2;
+        }
+
+        /* ========================================== */
+        /* --- SUBJECT STRIP (E-BOOK CATEGORIES) --- */
+        /* ========================================== */
+        .category-sticky-container {
+            background: #ffffff; border-bottom: 2px solid var(--primary-orange);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); width: 100%;
+            position: sticky; top: 65px; z-index: 50;
+        }
+        .category-scroll-wrapper { 
+            width: 100%; overflow-x: auto; padding: 0 5%; scrollbar-width: none;
+        }
+        .category-scroll-wrapper::-webkit-scrollbar { display: none; }
+        
+        .category-tabs { display: flex; width: max-content; }
+        
+        .cat-tab { 
+            padding: 12px 16px; color: #333333; font-size: 0.85rem; font-weight: 800; 
+            cursor: pointer; transition: 0.3s; white-space: nowrap; border-bottom: 3px solid transparent; 
+        }
+        .cat-tab.active { color: var(--primary-orange) !important; border-bottom: 3px solid var(--primary-orange) !important; }
+        .cat-tab:hover { color: var(--primary-orange); }
+
+        /* ========================================== */
+        /* --- MAIN E-BOOK CONTAINER --- */
+        /* ========================================== */
+        .ebook-container { max-width: 1200px; margin: 25px auto; padding: 0 5%; flex: 1; width: 100%;}
+        
+        .section-header { text-align: left; margin-bottom: 25px; padding-left: 15px; border-left: 6px solid var(--primary-orange); }
+        .section-header h2 { font-size: 1.8rem; font-weight: 800; color: var(--pure-white); line-height: 1.2;}
+        .section-header h2 span { color: var(--app-blue); }
+        .section-header p { color: var(--text-dim); font-size: 0.85rem; margin-top: 5px; font-weight: 500; text-transform: none;}
+
+        /* ========================================== */
+        /* --- E-BOOK GRID & A4 CARDS --- */
+        /* ========================================== */
+        .ebook-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 30px; 
+            padding-bottom: 20px;
+        }
+
+        .ebook-card {
+            background: linear-gradient(145deg, #101626, #060913);
+            border: 1px solid var(--border-dark); border-radius: 16px;
+            padding: 20px 15px; text-align: center; position: relative;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); transition: 0.4s;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .ebook-card:hover { 
+            transform: translateY(-8px); border-color: var(--primary-orange); 
+            box-shadow: 0 12px 30px rgba(255, 87, 34, 0.25); 
+            background: linear-gradient(145deg, #151c2f, #0a0e17);
+        }
+
+        /* 🔥 STRICT A4 SIZE COVER WRAPPER (1 : 1.414 Aspect Ratio) 🔥 */
+        .ebook-cover-wrapper {
+            width: 100%; max-width: 180px; 
+            aspect-ratio: 1 / 1.414; 
+            margin: 0 auto 20px; position: relative; z-index: 2;
+            background: #fff; border-radius: 4px; border: 1px solid #334155;
+            box-shadow: -5px 10px 20px rgba(0,0,0,0.6), inset 3px 0 5px rgba(0,0,0,0.1);
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
+        }
+        /* Page edge effect for 3D look */
+        .ebook-cover-wrapper::before {
+            content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 8px;
+            background: linear-gradient(to right, rgba(255,255,255,0.4), rgba(0,0,0,0.2)); z-index: 5;
+        }
+        
+        .ebook-img {
+            width: 100%; height: 100%; object-fit: fill; 
+            background-color: #000;
+        }
+
+        /* 🌟 Tag (Free / Premium) */
+        .book-tag {
+            position: absolute; top: 12px; right: -25px; 
+            font-size: 0.65rem; font-weight: 900; padding: 4px 25px; 
+            transform: rotate(45deg); letter-spacing: 1px; z-index: 10; box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+        }
+        .tag-free { background: var(--green-wa); color: #fff; }
+        .tag-premium { background: var(--primary-orange); color: #fff; }
+
+        /* 📋 Text Details */
+        .ebook-title { font-size: 1.1rem; color: #fff; font-weight: 800; margin-bottom: 8px; line-height: 1.3;}
+        .ebook-category { color: var(--gold); font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 12px;}
+        .ebook-desc { color: var(--text-dim); font-size: 0.8rem; text-transform: none; line-height: 1.5; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;}
+
+        .action-btn {
+            width: 100%; background: rgba(255, 87, 34, 0.1); color: var(--primary-orange);
+            border: 1px solid var(--primary-orange); padding: 12px; border-radius: 8px;
+            font-weight: 800; font-size: 0.9rem; cursor: pointer; transition: 0.3s;
+            display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: auto;
+        }
+        .action-btn:hover { background: var(--primary-orange); color: #fff; box-shadow: 0 5px 15px rgba(255, 87, 34, 0.4);}
+
+        /* ========================================== */
+        /* --- PDF VIEWER & PROGRESS --- */
+        /* ========================================== */
+        .progress-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px);
+            z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .progress-overlay.active { display: flex; }
+        .buffering-spinner {
+            width: 70px; height: 70px; border: 5px solid rgba(255, 87, 34, 0.2);
+            border-top: 5px solid var(--primary-orange); border-radius: 50%; animation: spinBorder 1s linear infinite; margin-bottom: 20px;
+        }
+        .progress-percent { font-size: 4rem; color: var(--gold); font-weight: 900; letter-spacing: 2px; }
+        .progress-msg { color: #fff; font-size: 1rem; font-weight: 700; letter-spacing: 2px; margin-top: 5px; text-align: center; }
+
+        .pdf-viewer-wrapper { position: fixed; inset: 0; background: #000; z-index: 20000; display: none; flex-direction: column; }
+        .pdf-viewer-wrapper.active { display: flex; }
+        .pdf-header-bar { background: var(--bg-card); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary-orange); }
+        .pdf-header-bar h3 { color: var(--gold); font-size: 1rem; margin: 0; }
+        .close-pdf-btn { background: var(--red-brand); color: #fff; border: none; padding: 8px 15px; border-radius: 6px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .close-pdf-btn:hover { background: #b91c1c; }
+        .pdf-iframe-container { flex: 1; width: 100%; height: 100%; background: #222; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+    </style>
+</head>
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="portal-header">
+        <div class="brand-container">
+            <div class="brand-name">STUDENT TUTORIAL</div>
+            <div class="brand-subtitle">E-BOOK LIBRARY</div>
+        </div>
+        <div class="nav-right-logo">
+            <div class="top-nav-logo-box"></div>
+        </div>
+    </header>
+
+    <!-- ================= SUBJECT STRIP (E-BOOK TABS) ================= -->
+    <div class="category-sticky-container">
+        <div class="category-scroll-wrapper">
+            <div class="category-tabs" id="bookTabs">
+                <!-- MATHS PYQ ab pehla aur default tab hai -->
+                <div class="cat-tab active" onclick="filterBooks('MATHS PYQ', this)">MATHS PYQ</div>
+                <div class="cat-tab" onclick="filterBooks('JNVST CLASS 6', this)">JNVST CLASS 6</div>
+                <div class="cat-tab" onclick="filterBooks('JNVST CLASS 9', this)">JNVST CLASS 9</div>
+                <div class="cat-tab" onclick="filterBooks('SHORT TRICKS', this)">SHORT TRICKS</div>
+                <div class="cat-tab" onclick="filterBooks('PRACTICE SETS', this)">PRACTICE SETS</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MAIN CONTENT (DYNAMIC GRID) ================= -->
+    <div class="ebook-container">
+        <div class="section-header">
+            <h2 id="dynamicTitle">MATHS <span>PYQ</span></h2>
+            <p>Digital PDFs and Practice Sets formulated by Abhinay Chaubey.</p>
+        </div>
+        
+        <div class="ebook-grid" id="ebookGrid">
+            <!-- Books will be injected here via JavaScript -->
+        </div>
+    </div>
+
+    <!-- ================= PDF VIEWER & PROGRESS ================= -->
+    <div class="progress-overlay" id="progressOverlay">
+        <div class="buffering-spinner"></div>
+        <div class="progress-percent" id="progressCounter">1%</div>
+        <div class="progress-msg">LOADING E-BOOK...</div>
+    </div>
+
+    <div class="pdf-viewer-wrapper" id="pdfViewerWrapper">
+        <div class="pdf-header-bar">
+            <h3 id="pdfViewerTitle">BOOK TITLE</h3>
+            <button class="close-pdf-btn" onclick="closePdfViewer()"><i class="fas fa-times"></i> CLOSE E-BOOK</button>
+        </div>
+        <div class="pdf-iframe-container">
+            <iframe id="pdfIframe" src=""></iframe>
+        </div>
+    </div>
+
+    <script>
+        // ================= JAVASCRIPT E-BOOK DATA =================
+        const ebooks = [
+            // Category 1: MATHS PYQ (Default)
+            {
+                category: 'MATHS PYQ',
+                title: 'JNVST VI MATHS PYQ (2018-2025)',
+                subject: 'SOLVED PAPERS',
+                img: 'me.png',
+                desc: 'Detailed step-by-step solutions of previous 8 years Navodaya mathematics section.',
+                tag: 'FREE',
+                link: '#'
+            },
+            {
+                category: 'MATHS PYQ',
+                title: 'JNVST IX MATHS PYQ (2018-2025)',
+                subject: 'SOLVED PAPERS',
+                img: 'me.png',
+                desc: 'Complete solved mathematical papers for Class 9 JNVST entrance exams.',
+                tag: 'PREMIUM',
+                link: '#'
+            },
+            
+            // Category 2: JNVST CLASS 6
+            {
+                category: 'JNVST CLASS 6',
+                title: 'JNVST CLASS 6 MATHS GUIDE',
+                subject: 'COMPLETE ARITHMETIC',
+                img: 'me.png',
+                desc: 'Full chapter-wise mathematics guide for Class 6 Navodaya Vidyalaya Entrance.',
+                tag: 'FREE',
+                link: '#'
+            },
+            
+            // Category 3: JNVST CLASS 9
+            {
+                category: 'JNVST CLASS 9',
+                title: 'JNVST CLASS 9 ADVANCE MATHS',
+                subject: 'ADVANCE CONCEPTS',
+                img: 'me.png',
+                desc: 'Algebra, Geometry, and advanced concepts strictly according to Navodaya Class 9 syllabus.',
+                tag: 'FREE',
+                link: '#'
+            },
+            {
+                category: 'JNVST CLASS 9',
+                title: 'CHAPTER-WISE FORMULA BOOK',
+                subject: 'QUICK REVISION',
+                img: 'me.png',
+                desc: 'A pocket-sized formula book for fast revision before the entrance exam.',
+                tag: 'PREMIUM',
+                link: '#'
+            },
+
+            // Category 4: SHORT TRICKS
+            {
+                category: 'SHORT TRICKS',
+                title: '100+ MAGICAL MATH TRICKS',
+                subject: 'VEDIC MATHEMATICS',
+                img: 'me.png',
+                desc: 'Abhinay Sir’s secret shortcut tricks to solve lengthy math problems in under 10 seconds.',
+                tag: 'FREE',
+                link: '#'
+            },
+            {
+                category: 'SHORT TRICKS',
+                title: 'DIGITAL SUM & CALCULATION',
+                subject: 'SPEED BOOSTER',
+                img: 'me.png',
+                desc: 'Learn how to use Digital Sum method to find answers directly from options.',
+                tag: 'PREMIUM',
+                link: '#'
+            },
+
+            // Category 5: PRACTICE SETS
+            {
+                category: 'PRACTICE SETS',
+                title: '500+ MATHS PRACTICE SET',
+                subject: 'PRACTICE QUESTIONS',
+                img: 'me.png',
+                desc: 'Collection of most important expected math questions for upcoming JNVST Class 6 exam.',
+                tag: 'PREMIUM',
+                link: '#'
+            }
+        ];
+
+        function renderBooks(filteredList) {
+            const grid = document.getElementById('ebookGrid');
+            grid.innerHTML = "";
+
+            if(filteredList.length === 0) {
+                grid.innerHTML = `<p style="color:var(--text-dim); text-align:center; width:100%; font-size:1.1rem; padding: 20px;">No E-Books available in this category yet.</p>`;
+                return;
+            }
+
+            filteredList.forEach((book, index) => {
+                const delay = index * 0.05;
+                const tagClass = book.tag === 'FREE' ? 'tag-free' : 'tag-premium';
+                const icon = book.tag === 'FREE' ? 'fa-book-open' : 'fa-lock';
+                const btnText = book.tag === 'FREE' ? 'READ NOW' : 'UNLOCK BOOK';
+
+                grid.innerHTML += `
+                <div class="ebook-card" style="animation: fadeIn 0.5s ease forwards ${delay}s; opacity:0;">
+                    <div class="book-tag ${tagClass}">${book.tag}</div>
+                    
+                    <!-- A4 Size Cover Container -->
+                    <div class="ebook-cover-wrapper">
+                        <img src="${book.img}" alt="${book.title}" class="ebook-img" onerror="this.src='me.png'">
+                    </div>
+                    
+                    <div class="ebook-title">${book.title}</div>
+                    <div class="ebook-category"><i class="fas fa-square-root-alt"></i> ${book.subject}</div>
+                    <div class="ebook-desc">${book.desc}</div>
+                    
+                    <button class="action-btn" onclick="openBook('${book.link}', '${book.title}')">
+                        <i class="fas ${icon}"></i> ${btnText}
+                    </button>
+                </div>`;
+            });
+        }
+
+        function filterBooks(category, element) {
+            // Update Active Tab
+            const tabs = document.getElementById('bookTabs').children;
+            for(let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            element.classList.add('active');
+
+            // Update Title Based on Category
+            document.getElementById('dynamicTitle').innerHTML = `<span>${category}</span>`;
+
+            // Filter Data
+            const filtered = ebooks.filter(b => b.category === category);
+            renderBooks(filtered);
+        }
+
+        // Initialize directly with "MATHS PYQ" on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.getElementById('bookTabs').children;
+            filterBooks('MATHS PYQ', tabs[0]);
+        });
+
+        // PDF Opening Logic
+        function openBook(link, title) {
+            if(!link || link.trim() === "" || link.trim() === "#") {
+                alert(`The E-Book "${title}" is currently being updated. Please check back later!`);
+                return;
+            }
+
+            const overlay = document.getElementById('progressOverlay');
+            const counter = document.getElementById('progressCounter');
+            overlay.classList.add('active');
+            
+            let currentPercent = 1;
+            let interval = setInterval(() => {
+                counter.innerText = currentPercent + "%";
+                currentPercent += 3; 
+                
+                if(currentPercent > 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        overlay.classList.remove('active');
+                        let embedLink = link;
+                        if (link.includes("drive.google.com") && link.includes("/view")) {
+                            embedLink = link.replace(/\/view.*$/, "/preview");
+                        }
+                        
+                        document.getElementById('pdfViewerTitle').innerText = title;
+                        document.getElementById('pdfIframe').src = embedLink;
+                        document.getElementById('pdfViewerWrapper').classList.add('active');
+                        document.body.style.overflow = 'hidden'; 
+                    }, 200);
+                }
+            }, 25);
+        }
+
+        function closePdfViewer() {
+            document.getElementById('pdfViewerWrapper').classList.remove('active');
+            document.getElementById('pdfIframe').src = "";
+            document.body.style.overflow = 'auto'; 
+        }
+    </script>
+</body>
+</html>

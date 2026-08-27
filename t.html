@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Expert Faculties | Student Tutorial</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-main: #060913;
+            --bg-card: #101626;
+            --gold: #f59e0b;
+            --primary-orange: #ff5722;
+            --app-blue: #00bcd4;
+            --text-light: #ffffff;
+            --text-dim: #94a3b8;
+            --border-dark: #1e293b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; text-transform: uppercase; }
+        
+        body { background-color: var(--bg-main); color: var(--text-light); overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; padding-bottom: 20px;}
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Oswald', sans-serif; letter-spacing: 1px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spinBorder { 100% { transform: rotate(360deg); } }
+
+        /* ========================================== */
+        /* --- HEADER --- */
+        /* ========================================== */
+        .portal-header {
+            background: var(--bg-card); border-bottom: 2px solid var(--primary-orange);
+            padding: 12px 5%; display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+        }
+        
+        .brand-container { display: flex; flex-direction: column; line-height: 1.1; }
+        .brand-name { font-size: 1.3rem; font-weight: 800; color: var(--pure-white); }
+        .brand-subtitle { font-size: 0.65rem; color: var(--text-dim); font-weight: 700; margin-top: 2px; letter-spacing: 1px;}
+
+        .nav-right-logo {
+            position: relative; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center;
+        }
+        .nav-right-logo::before {
+            content: ''; position: absolute; inset: -4px; border-radius: 50%;
+            border-top: 3px solid var(--app-blue); border-right: 3px solid transparent;
+            border-bottom: 3px solid var(--primary-orange); border-left: 3px solid transparent;
+            animation: spinBorder 3s linear infinite;
+        }
+        .top-nav-logo-box {
+            width: 100%; height: 100%; border-radius: 50%; border: 2px solid #ffffff;
+            background: url('logo.png') center/contain no-repeat; background-color: #fff; z-index: 2;
+        }
+
+        /* ========================================== */
+        /* --- SUBJECT STRIP --- */
+        /* ========================================== */
+        .category-sticky-container {
+            background: #ffffff; border-bottom: 2px solid var(--primary-orange);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); width: 100%;
+            position: sticky; top: 65px; z-index: 50;
+        }
+        .category-scroll-wrapper { 
+            width: 100%; overflow-x: auto; padding: 0 5%; scrollbar-width: none;
+        }
+        .category-scroll-wrapper::-webkit-scrollbar { display: none; }
+        
+        .category-tabs { display: flex; width: max-content; }
+        
+        .cat-tab { 
+            padding: 10px 16px; color: #333333; font-size: 0.85rem; font-weight: 800; 
+            cursor: pointer; transition: 0.3s; white-space: nowrap; border-bottom: 3px solid transparent; 
+        }
+        .cat-tab.active { color: var(--primary-orange) !important; border-bottom: 3px solid var(--primary-orange) !important; }
+        .cat-tab:hover { color: var(--primary-orange); }
+
+        /* ========================================== */
+        /* --- FACULTIES SECTION MAIN --- */
+        /* ========================================== */
+        .faculties-container { max-width: 1200px; margin: 25px auto; padding: 0 5%; flex: 1; width: 100%;}
+
+        /* ========================================== */
+        /* --- FACULTY GRID & CARD DESIGN --- */
+        /* ========================================== */
+        .faculty-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); 
+            gap: 30px; 
+            padding-bottom: 20px;
+        }
+
+        .faculty-card {
+            background: linear-gradient(145deg, #101626, #060913);
+            border: 1px solid var(--border-dark); border-radius: 16px;
+            padding: 30px 20px; text-align: center; position: relative;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); transition: 0.4s;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .faculty-card:hover { 
+            border-color: var(--primary-orange); 
+            box-shadow: 0 10px 30px rgba(255, 87, 34, 0.2); 
+            background: linear-gradient(145deg, #151c2f, #0a0e17);
+        }
+
+        /* 👑 Premium Glowing Image Wrapper */
+        .faculty-img-wrapper {
+            width: 130px; height: 130px; border-radius: 50%; position: relative;
+            margin-bottom: 25px; z-index: 2; padding: 5px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--app-blue));
+            box-shadow: 0 0 20px rgba(255, 87, 34, 0.2);
+        }
+        .faculty-img {
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+            background-color: #fff; border: 4px solid #101626;
+        }
+
+        /* 🌟 Experience Badge */
+        .exp-badge {
+            position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%);
+            background: #fff; color: #000; font-size: 0.7rem; font-weight: 800;
+            padding: 4px 12px; border-radius: 20px; border: 2px solid var(--primary-orange);
+            white-space: nowrap; box-shadow: 0 5px 10px rgba(0,0,0,0.4); z-index: 5;
+        }
+
+        /* 📋 Text Details */
+        .faculty-name { font-size: 1.4rem; color: #fff; font-weight: 800; margin-bottom: 5px; }
+        .faculty-subject { color: var(--app-blue); font-size: 0.8rem; font-weight: 800; letter-spacing: 1.2px; margin-bottom: 12px;}
+        .faculty-desc { color: var(--text-dim); font-size: 0.8rem; text-transform: none; line-height: 1.5; margin-bottom: 20px; }
+
+        /* ========================================== */
+        /* --- LIST STYLE CONTACT (NUMBER-WISE) --- */
+        /* ========================================== */
+        .faculty-contact-box {
+            width: 100%; text-align: left; margin-top: auto; 
+            border-top: 1px dashed var(--border-dark); padding-top: 20px;
+        }
+        
+        .contact-heading {
+            font-size: 0.95rem; color: var(--gold); margin-bottom: 15px; 
+            font-weight: 800; text-align: center; letter-spacing: 1.5px;
+        }
+
+        .f-contact-item {
+            display: flex; align-items: center; gap: 12px; padding: 12px 15px; margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-radius: 10px; text-decoration: none; color: #e2e8f0; font-size: 0.8rem; 
+            font-weight: 600; text-transform: none; transition: 0.3s;
+        }
+        
+        .f-contact-item:last-child { margin-bottom: 0; }
+        
+        .f-contact-item:hover { 
+            background: rgba(255, 87, 34, 0.1); 
+            border-color: var(--primary-orange); 
+            transform: translateX(5px); 
+        }
+
+        .f-contact-item i { font-size: 1.3rem; width: 25px; text-align: center; }
+        
+        /* Individual Icon Colors */
+        .i-mail { color: #ef4444; }
+        .i-wa { color: #25D366; }
+        .i-yt { color: #ff0000; }
+        .i-tg { color: #0088cc; }
+
+    </style>
+</head>
+<body>
+
+    <!-- ================= HEADER (CLEAN & SIMPLE) ================= -->
+    <header class="portal-header">
+        <div class="brand-container">
+            <div class="brand-name">STUDENT TUTORIAL</div>
+            <div class="brand-subtitle">EXPERT FACULTY TEAM</div>
+        </div>
+        <div class="nav-right-logo">
+            <div class="top-nav-logo-box"></div>
+        </div>
+    </header>
+
+    <!-- ================= THIN SUBJECT STRIP ================= -->
+    <div class="category-sticky-container">
+        <div class="category-scroll-wrapper">
+            <div class="category-tabs" id="facultyTabs">
+                <div class="cat-tab active" onclick="filterFaculty('MATHEMATICS', this)">MATHEMATICS</div>
+                <div class="cat-tab" onclick="filterFaculty('SCIENCE', this)">SCIENCE</div>
+                <div class="cat-tab" onclick="filterFaculty('PHYSICS', this)">PHYSICS</div>
+                <div class="cat-tab" onclick="filterFaculty('CHEMISTRY', this)">CHEMISTRY</div>
+                <div class="cat-tab" onclick="filterFaculty('BIOLOGY', this)">BIOLOGY</div>
+                <div class="cat-tab" onclick="filterFaculty('ENGLISH', this)">ENGLISH</div>
+                <div class="cat-tab" onclick="filterFaculty('HINDI', this)">HINDI</div>
+                <div class="cat-tab" onclick="filterFaculty('REASONING', this)">REASONING</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MAIN CONTENT (DYNAMIC GRID) ================= -->
+    <div class="faculties-container">
+        <div class="faculty-grid" id="facultyGrid">
+            <!-- Faculty Cards will be injected here via JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // ================= JAVASCRIPT FACULTY DATA =================
+        const faculties = [
+            {
+                category: 'MATHEMATICS',
+                name: 'ABHINAY CHAUBEY',
+                subject: 'MATHEMATICS EXPERT',
+                exp: '3+ YEARS EXP.',
+                img: 'logo.png',
+                desc: 'Specialized in Arithmetic & Advanced Mathematics. Master of fast calculation and Vedic tricks.',
+                email: 'abhinaychaubey83@gmail.com',
+                wa: '919670078465',
+                yt: 'https://youtube.com',
+                tg: 'https://telegram.org'
+            },
+            {
+                category: 'SCIENCE',
+                name: 'BHOLU CHAUBEY',
+                subject: 'SCIENCE & EVS EXPERT',
+                exp: '2+ YEARS EXP.',
+                img: 'bh.png',
+                desc: 'Detailed conceptual clarity in General Science and Environmental Studies for Board & Competitive exams.',
+                email: 'contact@studenttutorial.com',
+                wa: '910000000000',
+                yt: 'https://youtube.com',
+                tg: 'https://telegram.org'
+            },
+            {
+                category: 'PHYSICS',
+                name: 'PHYSICS EXPERT',
+                subject: 'PHYSICS FACULTY',
+                exp: '3+ YEARS EXP.',
+                img: 'm.png',
+                desc: 'Expert in Kinematics, Thermodynamics & Electromagnetism for 11th, 12th Boards & JEE/NEET.',
+                email: 'contact@studenttutorial.com',
+                wa: '910000000000',
+                yt: 'https://youtube.com',
+                tg: 'https://telegram.org'
+            },
+            {
+                category: 'CHEMISTRY',
+                name: 'CHEMISTRY EXPERT',
+                subject: 'CHEMISTRY FACULTY',
+                exp: '2+ YEARS EXP.',
+                img: 'm.png',
+                desc: 'Master of Organic, Inorganic, and Physical Chemistry concepts & complex reactions.',
+                email: 'contact@studenttutorial.com',
+                wa: '910000000000',
+                yt: 'https://youtube.com',
+                tg: 'https://telegram.org'
+            },
+            {
+                category: 'BIOLOGY',
+                name: 'BIOLOGY EXPERT',
+                subject: 'BIOLOGY FACULTY',
+                exp: '3+ YEARS EXP.',
+                img: 'm.png',
+                desc: 'In-depth knowledge of Botany and Zoology with clear diagrammatic explanations.',
+                email: 'contact@studenttutorial.com',
+                wa: '910000000000',
+                yt: 'https://youtube.com',
+                tg: 'https://telegram.org'
+            },
+            {
+                category: 'ENGLISH',
+                name: 'AMAN DUBEY',
+                subject: 'ENGLISH LANGUAGE EXPERT',
+                exp: '2+ YEARS EXP.',
+                img: 'm.png',
+                desc: 'Grammar, Vocabulary, and Literature expert. Helping students score 100/100 in English.',
+                email: 'contact@studenttutorial.com',
+                wa: '910000000000',
+                yt: 'https://youtube.com',
+                tg: 'https://telegram.org'
+            },
+            {
+                category: 'HINDI',
+                name: 'VIKRAM SIR',
+                subject: 'HINDI VYAKARAN',
+                exp: '3+ YEARS EXP.',
+                img: 'm.png',
+                desc: 'Hindi Literature and Vyakaran specialist for Board exams and competitive level.',
+                email: 'contact@studenttutorial.com',
+                wa: '910000000000',
+                yt: 'https://youtube.com',
+                tg: 'https://telegram.org'
+            },
+            {
+                category: 'REASONING',
+                name: 'RAHUL SIR',
+                subject: 'REASONING & MENTAL ABILITY',
+                exp: '2+ YEARS EXP.',
+                img: 'm.png',
+                desc: 'Master in logical reasoning, puzzles, and JNVST Mental Ability test preparations.',
+                email: 'contact@studenttutorial.com',
+                wa: '910000000000',
+                yt: 'https://youtube.com',
+                tg: 'https://telegram.org'
+            }
+        ];
+
+        function renderFaculties(filteredList) {
+            const grid = document.getElementById('facultyGrid');
+            grid.innerHTML = "";
+
+            if(filteredList.length === 0) {
+                grid.innerHTML = `<p style="color:var(--text-dim); text-align:center; width:100%; font-size:1.2rem;">No faculties found in this category.</p>`;
+                return;
+            }
+
+            filteredList.forEach((f, index) => {
+                const delay = index * 0.05;
+                grid.innerHTML += `
+                <div class="faculty-card" style="animation: fadeIn 0.4s ease forwards ${delay}s; opacity:0;">
+                    <div class="faculty-img-wrapper">
+                        <!-- Strict images fallback rule -->
+                        <img src="${f.img}" alt="${f.name}" class="faculty-img" onerror="this.src='m.png'">
+                        <div class="exp-badge">${f.exp}</div>
+                    </div>
+                    <div class="faculty-details">
+                        <h3 class="faculty-name">${f.name}</h3>
+                        <p class="faculty-subject">${f.subject}</p>
+                        <p class="faculty-desc">${f.desc}</p>
+                    </div>
+                    
+                    <!-- NEW LIST-STYLE CONTACT SECTION -->
+                    <div class="faculty-contact-box">
+                        <h4 class="contact-heading">CONTACT US</h4>
+                        
+                        <a href="mailto:${f.email}" class="f-contact-item">
+                            <i class="fas fa-envelope i-mail"></i>
+                            <span>${f.email}</span>
+                        </a>
+                        
+                        <a href="https://wa.me/${f.wa}" target="_blank" class="f-contact-item">
+                            <i class="fab fa-whatsapp i-wa"></i>
+                            <span>+91 ${f.wa}</span>
+                        </a>
+                        
+                        <a href="${f.yt}" target="_blank" class="f-contact-item">
+                            <i class="fab fa-youtube i-yt"></i>
+                            <span>YouTube Channel</span>
+                        </a>
+                        
+                        <a href="${f.tg}" target="_blank" class="f-contact-item">
+                            <i class="fab fa-telegram-plane i-tg"></i>
+                            <span>Telegram Group</span>
+                        </a>
+                    </div>
+
+                </div>`;
+            });
+        }
+
+        function filterFaculty(category, element) {
+            // Update Active Tab
+            const tabs = document.getElementById('facultyTabs').children;
+            for(let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            element.classList.add('active');
+
+            // Filter Data
+            const filtered = faculties.filter(f => f.category === category);
+            renderFaculties(filtered);
+        }
+
+        // Initialize directly with "MATHEMATICS" on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.getElementById('facultyTabs').children;
+            filterFaculty('MATHEMATICS', tabs[0]);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Tutorial | Mathematics & JNVST Portal</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-main: #060913;
+            --bg-card: #101626;
+            --gold: #f59e0b;
+            --primary-orange: #ff5722;
+            --primary-hover: #e64a19;
+            --app-blue: #00bcd4;
+            --text-light: #ffffff;
+            --text-dim: #94a3b8;
+            --border-dark: #1e293b;
+            --red-brand: #ef4444;
+            --green-wa: #10b981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; text-transform: uppercase; }
+        body { background-color: var(--bg-main); color: var(--text-light); overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+
+        /* ========================================== */
+        /* --- PREMIUM DOTTED SPINNING BORDER --- */
+        /* ========================================== */
+        .logo-spin-wrap {
+            position: relative; display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; background: #000; z-index: 1;
+        }
+        
+        .logo-spin-wrap::before {
+            content: ''; position: absolute; inset: -6px; border-radius: 50%;
+            border: 4px dotted var(--gold);
+            border-top-color: var(--primary-orange);
+            border-left-color: var(--app-blue);
+            animation: spinBorder 6s linear infinite; z-index: -1;
+        }
+        
+        .inner-img {
+            width: 100%; height: 100%; border-radius: 50%; object-fit: contain;
+            background: #fff; border: 2px solid #111; 
+        }
+        @keyframes spinBorder { 100% { transform: rotate(360deg); } }
+
+        /* ========================================== */
+        /* --- HEADER --- */
+        /* ========================================== */
+        .portal-header {
+            background: var(--bg-card); border-bottom: 2px solid var(--primary-orange);
+            padding: 15px 5%; display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+        }
+        .header-logo-box { display: flex; align-items: center; gap: 15px; z-index: 2; }
+        .header-logo-wrap { width: 50px; height: 50px; }
+        .header-text h1 { font-size: 1.2rem; color: #fff; font-weight: 900; letter-spacing: 1px; margin-bottom: 2px;}
+        .header-text p { font-size: 0.7rem; color: var(--gold); font-weight: 700; letter-spacing: 1.5px;}
+
+        .floating-logo-wrap {
+            position: fixed; bottom: 80px; right: 25px; z-index: 5000;
+            width: 55px; height: 55px; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        /* ========================================== */
+        /* --- MAIN CONTAINER & STICKY STRIP --- */
+        /* ========================================== */
+        .pdf-portal-container { max-width: 1200px; margin: 0 auto; padding: 30px 5% 60px 5%; flex: 1; position: relative; z-index: 2; width: 100%; }
+        
+        .category-sticky-container {
+            position: sticky; top: 80px; z-index: 50; margin: -30px -5.5% 40px -5.5%;
+            display: flex; flex-direction: column; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .category-sticky-container.hidden { transform: translateY(-100%); }
+
+        .category-scroll-wrapper { 
+            width: 100%; overflow-x: auto; padding: 0; background: #ffffff; 
+            border-bottom: 2px solid var(--primary-orange); scrollbar-width: none; position: relative;
+        }
+        .category-scroll-wrapper::-webkit-scrollbar { display: none; }
+        
+        .category-tabs { display: flex; width: max-content; padding: 0 15px; }
+        .cat-tab { 
+            padding: 15px 16px; color: #333333; font-size: 0.9rem; font-weight: 800; 
+            cursor: pointer; transition: 0.3s; white-space: nowrap; border-bottom: 3px solid transparent; 
+        }
+        .cat-tab.active { color: var(--primary-orange) !important; border-bottom: 3px solid var(--primary-orange) !important; }
+        .cat-tab:hover { color: var(--primary-orange); }
+
+        .strip-toggle-btn {
+            position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%);
+            background: #ffffff; color: var(--primary-orange); width: 50px; height: 22px;
+            border: 2px solid var(--primary-orange); border-top: none;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3); z-index: 10;
+        }
+        .strip-toggle-btn i { font-size: 1.1rem; }
+
+        .section-title { 
+            font-size: 1.6rem; font-weight: 900; margin-bottom: 25px; 
+            border-left: 5px solid var(--primary-orange); padding-left: 15px; letter-spacing: 1px;
+        }
+        .section-title span { color: var(--gold); }
+
+        /* ========================================== */
+        /* --- BOOKS GRID & CARDS --- */
+        /* ========================================== */
+        .books-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        
+        .book-card {
+            background: var(--bg-card); border: 2px solid var(--border-dark); border-radius: 14px; 
+            overflow: hidden; width: 100%; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); 
+            transition: 0.4s; text-align: center; position: relative; animation: fadeIn 0.5s ease forwards;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .book-card:hover { transform: translateY(-6px); border-color: var(--primary-orange); box-shadow: 0 15px 35px rgba(255, 87, 34, 0.2); }
+        
+        /* 🔥 LOCKED AND UNLOCKED TAGS 🔥 */
+        .book-tag { 
+            position: absolute; top: 12px; right: -28px; background: var(--primary-orange); 
+            color: #fff; font-size: 0.7rem; font-weight: 900; padding: 4px 30px; 
+            transform: rotate(45deg); letter-spacing: 1px; z-index: 10; transition: 0.3s;
+        }
+        .book-tag.locked-tag { background: var(--red-brand); color: #fff; }
+        .book-tag.unlocked-tag { background: var(--green-wa); color: #fff; }
+        
+        /* ========================================== */
+        /* --- DUAL BANNER SLIDER & DOTS --- */
+        /* ========================================== */
+        .slider-container { position: relative; width: 100%; }
+        .banner-slider-wrapper { 
+            width: 100%; aspect-ratio: 1 / 1.414; border-bottom: 2px solid var(--border-dark); 
+            background: #000; overflow-x: auto; overflow-y: hidden; position: relative; 
+            scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+        }
+        .banner-slider-wrapper::-webkit-scrollbar { display: none; }
+        .banner-slider-track { display: flex; width: 200%; height: 100%; }
+        .banner-slider-track img { width: 50%; height: 100%; object-fit: contain; display: block; padding: 4px; scroll-snap-align: start; background: #000; }
+        
+        .swipe-hint {
+            position: absolute; top: 10px; left: 10px; background: rgba(0, 0, 0, 0.75); color: var(--gold);
+            padding: 3px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 800; pointer-events: none; z-index: 5; border: 1px solid var(--gold);
+        }
+        .slider-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 5; }
+        .dot { width: 8px; height: 8px; background: rgba(255, 255, 255, 0.4); border-radius: 50%; transition: 0.3s ease; }
+        .dot.active { background: var(--primary-orange); width: 20px; border-radius: 10px; }
+
+        .book-content { padding: 20px 15px; }
+        .book-subject { color: var(--gold); font-size: 0.75rem; font-weight: 900; margin-bottom: 5px; letter-spacing: 1px; }
+        .book-title { color: var(--text-light); font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; line-height: 1.3;}
+        .book-desc {
+            color: var(--text-dim); font-size: 0.8rem; line-height: 1.5; font-weight: 500; 
+            text-transform: none; margin-bottom: 15px; display: -webkit-box; 
+            -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+
+        .btn-download { 
+            display: block; width: 100%; background: var(--primary-orange); color: #fff; 
+            border: none; outline: none; cursor: pointer; padding: 11px; border-radius: 6px; font-weight: 900; 
+            font-size: 0.95rem; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 87, 34, 0.4); letter-spacing: 1px;
+        }
+        .btn-download:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        .btn-chapters { background: #1e293b; color: var(--gold); box-shadow: none; border: 1px solid var(--gold); }
+        .btn-chapters:hover { background: var(--gold); color: #000; transform: translateY(-2px); }
+
+        /* ========================================== */
+        /* --- MATHS SPECIAL & CHAPTER LIST LAYOUT --- */
+        /* ========================================== */
+        .math-special-container { display: none; flex-direction: column; gap: 20px; animation: fadeIn 0.5s ease forwards; }
+        .back-choice-btn {
+            background: #1e293b; color: var(--gold); border: 1px solid var(--gold);
+            padding: 10px 20px; border-radius: 8px; font-weight: 800; cursor: pointer;
+            width: max-content; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;
+            font-size: 0.9rem; margin-bottom: 15px;
+        }
+        .back-choice-btn:hover { background: var(--gold); color: #000; }
+
+        .chapter-active-section { display: none; flex-direction: column; gap: 15px; }
+        .math-chapter-list { display: flex; flex-direction: column; gap: 10px; }
+        
+        .math-chapter-item {
+            background: var(--bg-card); border: 1px solid var(--border-dark); 
+            border-left: 4px solid var(--primary-orange); border-radius: 10px; padding: 10px 15px; 
+            display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer; transition: 0.3s ease;
+        }
+        .math-chapter-item:hover { 
+            transform: translateX(6px); border-color: var(--primary-orange); 
+            background: #172033; 
+        }
+        
+        .math-chapter-left { display: flex; align-items: center; gap: 15px; }
+        .math-chapter-img {
+            width: 45px; height: 45px; border-radius: 6px; border: 1px solid var(--border-dark);
+            object-fit: contain; background: #000; padding: 2px;
+        }
+        .math-chapter-title { color: var(--text-light); font-size: 0.95rem; font-weight: 800; }
+        .math-chapter-desc { color: var(--text-dim); font-size: 0.7rem; font-weight: 600; text-transform: none; margin-top: 2px; }
+
+        .math-chapter-right {
+            width: 35px; height: 35px; border-radius: 50%; background: rgba(255, 87, 34, 0.15);
+            display: flex; align-items: center; justify-content: center; transition: 0.3s;
+        }
+        .math-chapter-right i { color: var(--primary-orange); font-size: 1rem; transition: 0.3s; }
+        .math-chapter-item:hover .math-chapter-right { background: var(--primary-orange); }
+        .math-chapter-item:hover .math-chapter-right i { color: #fff; }
+
+        /* ========================================== */
+        /* --- PROGRESS, ALERTS & MODALS --- */
+        /* ========================================== */
+        .progress-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px);
+            z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .progress-overlay.active { display: flex; }
+        .buffering-spinner {
+            width: 70px; height: 70px; border: 5px solid rgba(255, 87, 34, 0.2);
+            border-top: 5px solid var(--primary-orange); border-radius: 50%; animation: bufferSpin 1s linear infinite; margin-bottom: 20px;
+        }
+        @keyframes bufferSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .progress-percent { font-size: 4rem; color: var(--gold); font-weight: 900; letter-spacing: 2px; }
+        .progress-msg { color: #fff; font-size: 1rem; font-weight: 700; letter-spacing: 2px; margin-top: 5px; text-align: center; }
+
+        .global-modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 10000; background: rgba(0, 0, 0, 0.9); opacity: 0; visibility: hidden; transition: opacity 0.3s ease; }
+        .global-modal.show { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--bg-card); border: 1px solid var(--border-dark); border-top: 4px solid var(--primary-orange); padding: 25px; border-radius: 14px; max-width: 380px; width: 95%; text-align: center;}
+        
+        .modal-icon-wrapper { width: 70px; height: 70px; margin: 0 auto 15px; background: rgba(255, 87, 34, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .modal-icon-wrapper i { font-size: 2.2rem; color: var(--primary-orange); }
+        
+        .modal-btn { background: var(--primary-orange); color: #fff; font-weight: 800; padding: 11px 20px; border: none; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 15px; transition: 0.3s; }
+        .modal-btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+        .pdf-viewer-wrapper { position: fixed; inset: 0; background: #000; z-index: 20000; display: none; flex-direction: column; }
+        .pdf-viewer-wrapper.active { display: flex; }
+        .pdf-header-bar { background: var(--bg-card); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary-orange); }
+        .pdf-header-bar h3 { color: var(--gold); font-size: 1rem; margin: 0; }
+        .close-pdf-btn { background: var(--red-brand); color: #fff; border: none; padding: 8px 15px; border-radius: 6px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .close-pdf-btn:hover { background: #b91c1c; }
+        .pdf-iframe-container { flex: 1; width: 100%; height: 100%; background: #222; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        .passcode-input {
+            width: 100%; padding: 12px; border-radius: 8px; border: 2px solid var(--gold); 
+            background: #1e293b; color: #fff; font-weight: 900; font-size: 1.1rem; 
+            text-align: center; margin-bottom: 10px; outline: none; text-transform: uppercase; letter-spacing: 2px;
+        }
+        .passcode-input:focus { border-color: var(--primary-orange); box-shadow: 0 0 10px rgba(255,87,34,0.3); }
+
+    </style>
+</head>
+<body>
+
+    <header class="portal-header">
+        <div class="header-logo-box">
+            <div class="logo-spin-wrap header-logo-wrap">
+                <img src="logo.png" alt="Logo" class="inner-img" onerror="this.src='a.png'">
+            </div>
+            <div class="header-text">
+                <h1>STUDENT TUTORIAL</h1>
+                <p>MATHEMATICS & JNVST PORTAL</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="logo-spin-wrap floating-logo-wrap" onclick="window.scrollTo(0,0)" title="Back to Top">
+        <img src="logo.png" alt="Logo" class="inner-img" onerror="this.src='a.png'">
+    </div>
+
+    <div class="pdf-portal-container">
+        
+        <div class="category-sticky-container" id="categoryStripContainer">
+            <div class="category-scroll-wrapper" id="categoryStrip">
+                <div class="category-tabs" id="categoryTabs">
+                    <div class="cat-tab active" onclick="selectCategory('HOME', this)">HOME</div>
+                    <div class="cat-tab" onclick="selectCategory('MATHS SPECIAL', this)">MATHS SPECIAL</div>
+                    <div class="cat-tab" onclick="selectCategory('JNVST VI', this)">JNVST VI</div>
+                    <div class="cat-tab" onclick="selectCategory('JNVST IX', this)">JNVST IX</div>
+                    <div class="cat-tab" onclick="selectCategory('CLASS 9TH', this)">CLASS 9TH</div>
+                    <div class="cat-tab" onclick="selectCategory('CLASS 10TH', this)">CLASS 10TH</div>
+                    <div class="cat-tab" onclick="selectCategory('CLASS 11TH', this)">CLASS 11TH</div>
+                    <div class="cat-tab" onclick="selectCategory('CLASS 12TH', this)">CLASS 12TH</div>
+                </div>
+            </div>
+            
+            <div class="strip-toggle-btn" onclick="toggleCategoryStrip()" title="Hide/Show Classes">
+                <i class="fas fa-chevron-up" id="stripToggleIcon"></i>
+            </div>
+        </div>
+
+        <h2 class="section-title" id="dynamicTitle" style="margin-top: 15px;">HOME <span>MATERIALS</span></h2>
+
+        <!-- Main Grid -->
+        <div class="books-grid" id="booksGrid"></div>
+
+        <!-- ========================================== -->
+        /* --- MATHS SPECIAL PREMIUM SECTION --- */
+        <!-- ========================================== -->
+        <div class="math-special-container" id="mathSpecialContainer">
+            <h3 style="color:var(--gold); margin-bottom:10px; font-size:1.3rem; text-align:center;">STUDENT TUTORIAL - MATHEMATICS SPECIAL</h3>
+            <div class="books-grid">
+                
+                <!-- 1. SYLLABUS CARD -->
+                <div class="book-card" onclick="attemptUnlock('triggerDownloadProgress', '#', 'MATHS FULL SYLLABUS')" style="cursor:pointer; border-color:var(--border-dark);">
+                    <div class="book-tag locked-tag" id="syllabusTag">LOCKED</div>
+                    <div class="slider-container">
+                        <div class="banner-slider-wrapper" onscroll="updateDots(this)">
+                            <div class="swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
+                            <div class="banner-slider-track">
+                                <img src="maths_b1.png" alt="Banner 1" onerror="this.src='a.png'">
+                                <img src="maths_b2.png" alt="Fallback Banner" onerror="this.src='a.png'">
+                            </div>
+                        </div>
+                        <div class="slider-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="book-content">
+                        <h3 class="book-title">MATHS FULL SYLLABUS</h3>
+                        <p class="book-desc">Complete Competitive & Board Mathematics Roadmap by Student Tutorial.</p>
+                        <button class="btn-download" style="background: var(--bg-card); color: var(--gold); border: 1px solid var(--gold);" id="btnSyllabus">
+                            <i class="fas fa-lock" style="margin-right:5px;"></i> VIEW SYLLABUS
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. CALCULATION CARD -->
+                <div class="book-card" onclick="attemptUnlock('openChapterView', 'calculation', 'CALCULATION')" style="cursor:pointer; border-color:var(--border-dark);">
+                    <div class="book-tag locked-tag" id="calcTag">LOCKED</div>
+                    <div class="slider-container">
+                        <div class="banner-slider-wrapper" onscroll="updateDots(this)">
+                            <div class="swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
+                            <div class="banner-slider-track">
+                                <img src="calc_b1.png" alt="Banner 1" onerror="this.src='a.png'">
+                                <img src="calc_b2.png" alt="Fallback Banner" onerror="this.src='a.png'">
+                            </div>
+                        </div>
+                        <div class="slider-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="book-content">
+                        <h3 class="book-title">CALCULATION TRICKS</h3>
+                        <p class="book-desc">Vedic Maths, Fast Calculation, Digital Sum, Squares & Cubes.</p>
+                        <button class="btn-download btn-chapters" id="btnCalc"><i class="fas fa-lock" style="margin-right:5px;"></i> VIEW CHAPTERS</button>
+                    </div>
+                </div>
+
+                <!-- 3. ARITHMETIC CARD -->
+                <div class="book-card" onclick="attemptUnlock('openChapterView', 'arithmetic', 'ARITHMETIC')" style="cursor:pointer; border-color:var(--border-dark);">
+                    <div class="book-tag locked-tag" id="arithTag">LOCKED</div>
+                    <div class="slider-container">
+                        <div class="banner-slider-wrapper" onscroll="updateDots(this)">
+                            <div class="swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
+                            <div class="banner-slider-track">
+                                <img src="arith_b1.png" alt="Banner 1" onerror="this.src='a.png'">
+                                <img src="arith_b2.png" alt="Fallback Banner" onerror="this.src='a.png'">
+                            </div>
+                        </div>
+                        <div class="slider-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="book-content">
+                        <h3 class="book-title">ARITHMETIC MATHS</h3>
+                        <p class="book-desc">Complete 17 chapters from Percentage, Ratio & Proportion to Number System.</p>
+                        <button class="btn-download btn-chapters" id="btnArith"><i class="fas fa-lock" style="margin-right:5px;"></i> VIEW CHAPTERS</button>
+                    </div>
+                </div>
+
+                <!-- 4. ADVANCE CARD -->
+                <div class="book-card" onclick="attemptUnlock('openChapterView', 'advance', 'ADVANCE')" style="cursor:pointer; border-color:var(--border-dark);">
+                    <div class="book-tag locked-tag" id="advTag">LOCKED</div>
+                    <div class="slider-container">
+                        <div class="banner-slider-wrapper" onscroll="updateDots(this)">
+                            <div class="swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
+                            <div class="banner-slider-track">
+                                <img src="adv_b1.png" alt="Banner 1" onerror="this.src='a.png'">
+                                <img src="adv_b2.png" alt="Fallback Banner" onerror="this.src='a.png'">
+                            </div>
+                        </div>
+                        <div class="slider-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="book-content">
+                        <h3 class="book-title">ADVANCE MATHS</h3>
+                        <p class="book-desc">Complete 15 chapters covering Algebra, Geometry, Trigonometry & Mensuration.</p>
+                        <button class="btn-download btn-chapters" id="btnAdv"><i class="fas fa-lock" style="margin-right:5px;"></i> VIEW CHAPTERS</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Universal Chapter View Section -->
+        <div class="chapter-active-section" id="chapterActiveSection">
+            <button class="back-choice-btn" onclick="backToMainView()"><i class="fas fa-arrow-left"></i> BACK TO SECTIONS</button>
+            <h2 class="section-title" id="activeSectionTitle" style="margin-top:5px;">CHAPTER <span>WISE PDF</span></h2>
+            <div class="math-chapter-list" id="chapterList"></div>
+        </div>
+    </div>
+
+    <!-- Modals & Overlays -->
+    <div class="progress-overlay" id="progressOverlay">
+        <div class="buffering-spinner"></div>
+        <div class="progress-percent" id="progressCounter">1%</div>
+        <div class="progress-msg">LOADING SECURE PDF...</div>
+    </div>
+
+    <div class="global-modal" id="alertModal">
+        <div class="modal-content">
+            <div class="modal-icon-wrapper"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3 style="color:#fff; margin-bottom:8px;">LINK UNAVAILABLE</h3>
+            <p id="alertMsg" style="color:var(--text-dim); font-size:0.85rem; line-height:1.5; text-transform:none;">The PDF link has not been updated yet by the administrator. Please check back later.</p>
+            <button class="modal-btn" onclick="document.getElementById('alertModal').classList.remove('show')">OKAY, I UNDERSTAND</button>
+        </div>
+    </div>
+    
+    <!-- PASSCODE MODAL FOR PREMIUM CONTENT (PASSWORD: ABHINAY01) -->
+    <div class="global-modal" id="passcodeModal">
+        <div class="modal-content" style="border-top-color: var(--gold);">
+            <div class="modal-icon-wrapper" style="background: rgba(245, 158, 11, 0.15);"><i class="fas fa-lock" style="color: var(--gold);"></i></div>
+            <h3 style="color:#fff; margin-bottom:8px;">PREMIUM CONTENT</h3>
+            <p style="color:var(--text-dim); font-size:0.85rem; line-height:1.5; text-transform:none; margin-bottom:15px;">Please enter the secret code provided by Abhinay Sir to unlock all Mathematics Special modules.</p>
+            
+            <input type="text" id="studentPasscode" class="passcode-input" placeholder="ENTER ACCESS CODE" autocomplete="off">
+            <p id="passcodeError" style="color: var(--red-brand); font-size: 0.85rem; display: none; margin-bottom: 10px; font-weight: bold;">Incorrect Code! Try again.</p>
+            
+            <button class="modal-btn" style="background: linear-gradient(90deg, var(--gold), #fbbf24); color: #000;" onclick="verifyCode()">UNLOCK ALL MODULES</button>
+            <button style="margin-top:15px; width:100%; padding:10px; border:none; background:transparent; color:var(--text-dim); text-decoration:underline; cursor:pointer;" onclick="closePasscodeModal()">CANCEL</button>
+        </div>
+    </div>
+
+    <!-- IN-SITE PDF VIEWER -->
+    <div class="pdf-viewer-wrapper" id="pdfViewerWrapper">
+        <div class="pdf-header-bar">
+            <h3 id="pdfViewerTitle">DOCUMENT TITLE</h3>
+            <button class="close-pdf-btn" onclick="closePdfViewer()"><i class="fas fa-times"></i> CLOSE PDF</button>
+        </div>
+        <div class="pdf-iframe-container">
+            <iframe id="pdfIframe" src=""></iframe>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // --- PREMIUM LOCK SYSTEM SETUP (ABHINAY01) ---
+        // ==========================================
+        const SECRET_CODE = "ABHINAY01"; 
+        let isPremiumUnlocked = false;
+        let pendingAction = null; 
+        let pendingParams = null;
+
+        function attemptUnlock(action, ...params) {
+            if (isPremiumUnlocked) {
+                window[action](...params);
+            } else {
+                pendingAction = action;
+                pendingParams = params;
+                document.getElementById('studentPasscode').value = '';
+                document.getElementById('passcodeError').style.display = 'none';
+                document.getElementById('passcodeModal').classList.add('show');
+            }
+        }
+
+        function verifyCode() {
+            const entered = document.getElementById('studentPasscode').value.trim().toUpperCase();
+            if (entered === SECRET_CODE) {
+                isPremiumUnlocked = true;
+                closePasscodeModal();
+                updateLockUI();
+                
+                if (pendingAction) {
+                    window[pendingAction](...pendingParams);
+                    pendingAction = null;
+                }
+            } else {
+                document.getElementById('passcodeError').style.display = 'block';
+            }
+        }
+
+        function closePasscodeModal() {
+            document.getElementById('passcodeModal').classList.remove('show');
+            pendingAction = null;
+        }
+        
+        function updateLockUI() {
+            // Update All Tags to UNLOCKED (Green)
+            const tags = ['syllabusTag', 'calcTag', 'arithTag', 'advTag'];
+            tags.forEach(id => {
+                const tag = document.getElementById(id);
+                if(tag) {
+                    tag.innerText = "UNLOCKED";
+                    tag.classList.remove('locked-tag');
+                    tag.classList.add('unlocked-tag');
+                }
+            });
+
+            // Update Buttons to remove Lock Icon
+            const btnSyllabus = document.getElementById('btnSyllabus');
+            if (btnSyllabus) btnSyllabus.innerHTML = '<i class="fas fa-book-open" style="margin-right:5px;"></i> VIEW SYLLABUS';
+            
+            const btnCalc = document.getElementById('btnCalc');
+            if (btnCalc) btnCalc.innerHTML = '<i class="fas fa-list-ul" style="margin-right:5px;"></i> VIEW CHAPTERS';
+            
+            const btnArith = document.getElementById('btnArith');
+            if (btnArith) btnArith.innerHTML = '<i class="fas fa-list-ul" style="margin-right:5px;"></i> VIEW CHAPTERS';
+            
+            const btnAdv = document.getElementById('btnAdv');
+            if (btnAdv) btnAdv.innerHTML = '<i class="fas fa-list-ul" style="margin-right:5px;"></i> VIEW CHAPTERS';
+
+            // If chapter list is currently open, change locks to open-books
+            if (document.getElementById('chapterActiveSection').style.display === "flex") {
+                const locks = document.querySelectorAll('.math-chapter-right i.fa-lock');
+                locks.forEach(icon => {
+                    icon.classList.remove('fa-lock');
+                    icon.classList.add('fa-book-open');
+                    icon.style.color = 'var(--primary-orange)';
+                });
+            }
+        }
+
+        function toggleCategoryStrip() {
+            const stripContainer = document.getElementById('categoryStripContainer');
+            const icon = document.getElementById('stripToggleIcon');
+            stripContainer.classList.toggle('hidden');
+            
+            if(stripContainer.classList.contains('hidden')) {
+                icon.className = "fas fa-chevron-down";
+            } else {
+                icon.className = "fas fa-chevron-up";
+            }
+        }
+
+        function updateDots(el) {
+            const index = Math.round(el.scrollLeft / el.clientWidth);
+            const dots = el.parentElement.querySelectorAll('.dot');
+            dots.forEach(d => d.classList.remove('active'));
+            if(dots[index]) dots[index].classList.add('active');
+        }
+
+        let currentCategory = "HOME"; 
+
+        function selectCategory(category, element) {
+            currentCategory = category;
+            
+            let displayTitle = category === "MATHS SPECIAL" ? "MATHS SPECIAL BATCH" : category;
+            document.getElementById('dynamicTitle').innerHTML = `${displayTitle} <span>MATERIALS</span>`;
+            
+            const tabs = document.getElementById('categoryTabs').children;
+            for(let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            element.classList.add('active');
+
+            document.getElementById('chapterActiveSection').style.display = "none";
+            renderContent(category);
+        }
+
+        // ==========================================
+        // --- COMPREHENSIVE DATA (ALL SUBJECTS & BANNERS FALLBACK TO a.png) ---
+        // ==========================================
+        const pdfData = {
+            "HOME": [
+                { subject: "MATHEMATICS", title: "MATHEMATICS SPECIAL NOTES", img1: "hm1.png", img2: "hm2.png", action: "chapters_lock", desc: "Complete Mathematics Special study material by Student Tutorial." },
+                { subject: "ENTRANCE", title: "JNVST COMPLETE PREPARATION", img1: "hj1.png", img2: "hj2.png", link: "#", desc: "Jawahar Navodaya Vidyalaya Entrance Test study material & practice sets." }
+            ],
+            "JNVST VI": [
+                { subject: "MATHEMATICS", title: "JNVST VI - MATHEMATICS", img1: "j6m1.png", img2: "j6m2.png", link: "#", desc: "Arithmetic, Fractions, Perimeter & Area short tricks." },
+                { subject: "REASONING", title: "JNVST VI - MENTAL ABILITY", img1: "j6r1.png", img2: "j6r2.png", link: "#", desc: "All types of mental ability figures and puzzles." },
+                { subject: "EVS", title: "JNVST VI - EVS / SCIENCE", img1: "j6e1.png", img2: "j6e2.png", link: "#", desc: "Environmental studies and basic science for class 6 level." },
+                { subject: "LANGUAGE", title: "JNVST VI - HINDI / ENGLISH", img1: "j6l1.png", img2: "j6l2.png", link: "#", desc: "Grammar rules and reading comprehension practice." }
+            ],
+            "JNVST IX": [
+                { subject: "MATHEMATICS", title: "JNVST IX - MATHEMATICS", img1: "j9m1.png", img2: "j9m2.png", link: "#", desc: "Advanced level mathematics practice sets and concepts." },
+                { subject: "SCIENCE", title: "JNVST IX - SCIENCE", img1: "j9s1.png", img2: "j9s2.png", link: "#", desc: "Physics, Chemistry, and Biology based on 8th syllabus." },
+                { subject: "REASONING", title: "JNVST IX - REASONING", img1: "j9r1.png", img2: "j9r2.png", link: "#", desc: "Logical reasoning and mental ability notes." },
+                { subject: "LANGUAGE", title: "JNVST IX - HINDI & ENGLISH", img1: "j9l1.png", img2: "j9l2.png", link: "#", desc: "Comprehensive language grammar and reading." }
+            ],
+            "CLASS 9TH": [
+                { subject: "MATHEMATICS", title: "CLASS 9 - MATHEMATICS", img1: "c9m1.png", img2: "c9m2.png", link: "#", desc: "Number system, geometry, polynomials." },
+                { subject: "SCIENCE", title: "CLASS 9 - SCIENCE", img1: "c9s1.png", img2: "c9s2.png", link: "#", desc: "Physics, Chemistry, Biology full chapters." },
+                { subject: "SOCIAL SCIENCE", title: "CLASS 9 - SOCIAL SCIENCE", img1: "c9ss1.png", img2: "c9ss2.png", link: "#", desc: "History, Geography, Civics, Economics." },
+                { subject: "HINDI", title: "CLASS 9 - HINDI", img1: "c9h1.png", img2: "c9h2.png", link: "#", desc: "Hindi literature and grammar notes." },
+                { subject: "ENGLISH", title: "CLASS 9 - ENGLISH", img1: "c9e1.png", img2: "c9e2.png", link: "#", desc: "English literature and grammar." }
+            ],
+            "CLASS 10TH": [
+                { subject: "MATHEMATICS", title: "CLASS 10 - MATHEMATICS", img1: "c10m1.png", img2: "c10m2.png", link: "#", desc: "Quadratic equations, circles, and surface area revision sheets." },
+                { subject: "SCIENCE", title: "CLASS 10 - SCIENCE", img1: "c10s1.png", img2: "c10s2.png", link: "#", desc: "Chemical reactions, electricity, life processes." },
+                { subject: "SOCIAL SCIENCE", title: "CLASS 10 - SOCIAL SCIENCE", img1: "c10ss1.png", img2: "c10ss2.png", link: "#", desc: "Nationalism in India, resources and development." },
+                { subject: "HINDI", title: "CLASS 10 - HINDI", img1: "c10h1.png", img2: "c10h2.png", link: "#", desc: "Board level Hindi literature and Vyakaran." },
+                { subject: "ENGLISH", title: "CLASS 10 - ENGLISH", img1: "c10e1.png", img2: "c10e2.png", link: "#", desc: "First flight and footprints without feet complete notes." }
+            ],
+            "CLASS 11TH": [
+                { subject: "PHYSICS", title: "CLASS 11 - PHYSICS", img1: "c11p1.png", img2: "c11p2.png", link: "#", desc: "Kinematics, Thermodynamics, Waves." },
+                { subject: "CHEMISTRY", title: "CLASS 11 - CHEMISTRY", img1: "c11c1.png", img2: "c11c2.png", link: "#", desc: "Organic, Inorganic and Physical Chemistry." },
+                { subject: "MATHEMATICS", title: "CLASS 11 - MATHEMATICS", img1: "c11m1.png", img2: "c11m2.png", link: "#", desc: "Algebra, Calculus, Conic Sections." },
+                { subject: "BIOLOGY", title: "CLASS 11 - BIOLOGY", img1: "c11b1.png", img2: "c11b2.png", link: "#", desc: "Botany and Zoology complete notes." },
+                { subject: "LANGUAGES", title: "CLASS 11 - HINDI & ENGLISH", img1: "c11l1.png", img2: "c11l2.png", link: "#", desc: "Literature and grammar complete revision." }
+            ],
+            "CLASS 12TH": [
+                { subject: "PHYSICS", title: "CLASS 12 - PHYSICS", img1: "c12p1.png", img2: "c12p2.png", link: "#", desc: "Electrostatics, Optics, Modern Physics." },
+                { subject: "CHEMISTRY", title: "CLASS 12 - CHEMISTRY", img1: "c12c1.png", img2: "c12c2.png", link: "#", desc: "Solutions, Electrochemistry, Organic Reactions." },
+                { subject: "MATHEMATICS", title: "CLASS 12 - MATHEMATICS", img1: "c12m1.png", img2: "c12m2.png", link: "#", desc: "Integration, Matrices, Determinants, Probability." },
+                { subject: "BIOLOGY", title: "CLASS 12 - BIOLOGY", img1: "c12b1.png", img2: "c12b2.png", link: "#", desc: "Genetics, Reproduction, Ecology." },
+                { subject: "LANGUAGES", title: "CLASS 12 - HINDI & ENGLISH", img1: "c12l1.png", img2: "c12l2.png", link: "#", desc: "Board exam special writing skills and literature." }
+            ]
+        };
+
+        const chapterData = {
+            calculation: [
+                { title: "01. Vedic Calculation Tricks", img: "a.png", link: "#", desc: "Fast addition & multiplication mental math techniques" },
+                { title: "02. Squares & Square Roots", img: "a.png", link: "#", desc: "Find any square up to 1000 in seconds" },
+                { title: "03. Cubes & Cube Roots", img: "a.png", link: "#", desc: "Easy methods for perfect & imperfect numbers" },
+                { title: "04. Digital Sum Method", img: "a.png", link: "#", desc: "Solve heavy calculations instantly" }
+            ],
+            arithmetic: [
+                { title: "01. Percentage (प्रतिशत)", img: "a.png", link: "#", desc: "Basic to Advanced Concept & Multipliers" },
+                { title: "02. Ratio & Proportion", img: "a.png", link: "#", desc: "Coin, Income & Expenditure Based Questions" },
+                { title: "03. Partnership (साझेदारी)", img: "a.png", link: "#", desc: "Investment & Profit Sharing Methods" },
+                { title: "04. AGE (आयु)", img: "a.png", link: "#", desc: "Age based ratios and logical questions" },
+                { title: "05. Profit, Loss & Discount", img: "a.png", link: "#", desc: "Dishonest Dealer, MP & SP Short Tricks" },
+                { title: "06. Simple Interest (SI)", img: "a.png", link: "#", desc: "Rate & Time Direct Formula Shortcuts" },
+                { title: "07. Compound Interest (CI)", img: "a.png", link: "#", desc: "Tree Method, Successive & Installments" },
+                { title: "08. LCM AND HCF", img: "a.png", link: "#", desc: "Difference Between SI and CI Trick Sets" },
+                { title: "09. Average (औसत)", img: "a.png", link: "#", desc: "Deviation Method & Group Age Questions" },
+                { title: "10. Mixture & Alligation", img: "a.png", link: "#", desc: "Replacement & Pure/Impure Milk Concepts" },
+                { title: "11. Time & Work", img: "a.png", link: "#", desc: "Efficiency, M-D-H & Wages Questions" },
+                { title: "12. Pipe & Cistern", img: "a.png", link: "#", desc: "Inlet, Outlet & Leakage Based Problems" },
+                { title: "13. Time, Speed & Distance", img: "a.png", link: "#", desc: "Relative Speed, Train & Meeting Point" },
+                { title: "14. Boat & Stream", img: "a.png", link: "#", desc: "Upstream & Downstream Short Tricks" },
+                { title: "15. Number System", img: "a.png", link: "#", desc: "Unit Digit, Factors, AP/GP & Remainders" },
+                { title: "16. Simplification", img: "a.png", link: "#", desc: "BODMAS & Series Tricks" },
+                { title: "17. Surds & Indices", img: "a.png", link: "#", desc: "Square Root Tricks & Power Rules" }
+            ],
+            advance: [
+                { title: "01. Algebra (Part 1)", img: "a.png", link: "#", desc: "Identities, Power Formats & Value Putting" },
+                { title: "02. Algebra (Part 2)", img: "a.png", link: "#", desc: "Quadratic Eq, Roots & Remainder Theorem" },
+                { title: "03. Lines & Angles", img: "a.png", link: "#", desc: "Parallel Lines, Transversal & Bisectors" },
+                { title: "04. Triangles", img: "a.png", link: "#", desc: "Congruency, Centroid, Orthocenter, Incenter" },
+                { title: "05. Quadrilaterals & Polygons", img: "a.png", link: "#", desc: "Parallelogram, Rhombus, Trapezium" },
+                { title: "06. Circle & Tangents", img: "a.png", link: "#", desc: "Chords, Secants, Alternate Segment Theorem" },
+                { title: "07. Coordinate Geometry", img: "a.png", link: "#", desc: "Distance Formula, Section Formula & Slopes" },
+                { title: "08. Trigonometry (Identities)", img: "a.png", link: "#", desc: "Standard Values, Quadrants & Formulas" },
+                { title: "09. Maxima & Minima", img: "a.png", link: "#", desc: "Sine/Cosine ranges and advanced limits" },
+                { title: "10. Height & Distance", img: "a.png", link: "#", desc: "Shadow, Elevation & Depression Angle Shortcuts" },
+                { title: "11. Mensuration 2D", img: "a.png", link: "#", desc: "Square, Rectangle, Triangle, Circle Area" },
+                { title: "12. Mensuration 3D", img: "a.png", link: "#", desc: "Cube, Cylinder, Cone, Sphere Volume" },
+                { title: "13. Data Interpretation (DI)", img: "a.png", link: "#", desc: "Tabular, Bar Graph, Pie Chart & Line Graph" },
+                { title: "14. Statistics", img: "a.png", link: "#", desc: "Mean, Median, Mode & Variance" },
+                { title: "15. Probability", img: "a.png", link: "#", desc: "Cards, Dice, Coins & Combinations" }
+            ]
+        };
+
+        function renderContent(category) {
+            const grid = document.getElementById('booksGrid');
+            const mathContainer = document.getElementById('mathSpecialContainer');
+
+            // Agar user MATHS SPECIAL tab click kare toh Premium category dikhe
+            // (HOME pe click karne se jo pehla item hai wo direct action = 'chapters_lock' rakhta hai jo waapis yahi layega)
+            if(category === "MATHS SPECIAL" || category === "chapters_lock") {
+                grid.style.display = "none";
+                mathContainer.style.display = "flex";
+                
+                // Set the active tab explicitly if redirected from HOME card
+                if(category === "chapters_lock") {
+                    const tabs = document.getElementById('categoryTabs').children;
+                    for(let i=0; i<tabs.length; i++) tabs[i].classList.remove('active');
+                    tabs[1].classList.add('active'); // Tabs[1] is Maths Special
+                    currentCategory = "MATHS SPECIAL";
+                    document.getElementById('dynamicTitle').innerHTML = `MATHS SPECIAL BATCH <span>MATERIALS</span>`;
+                }
+            } else {
+                mathContainer.style.display = "none";
+                grid.style.display = "grid";
+                grid.innerHTML = "";
+                
+                const books = pdfData[category] || [];
+                books.forEach((book, index) => {
+                    
+                    let buttonHtml = '';
+                    if(book.action === "chapters_lock") {
+                        buttonHtml = `<button class="btn-download btn-chapters" onclick="selectCategory('chapters_lock', this)">
+                                        <i class="fas fa-lock" style="margin-right:5px;"></i> UNLOCK MODULE
+                                      </button>`;
+                    } else {
+                        buttonHtml = `<button class="btn-download" onclick="triggerDownloadProgress('${book.link}', '${book.title}')">
+                                        <i class="fas fa-book-open"></i> OPEN PDF
+                                      </button>`;
+                    }
+
+                    grid.innerHTML += `
+                    <div class="book-card" style="animation: fadeIn 0.5s ease forwards ${index * 0.08}s; opacity:0;">
+                        <div class="book-tag">PDF</div>
+                        
+                        <div class="slider-container">
+                            <div class="banner-slider-wrapper" onscroll="updateDots(this)">
+                                <div class="swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
+                                <div class="banner-slider-track">
+                                    <img src="${book.img1}" alt="Banner 1" onerror="this.src='a.png'">
+                                    <img src="${book.img2}" alt="Banner 2" onerror="this.src='a.png'">
+                                </div>
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="book-content">
+                            <div class="book-subject"><i class="fas fa-bookmark"></i> ${book.subject}</div>
+                            <h3 class="book-title">${book.title}</h3>
+                            <p class="book-desc">${book.desc}</p>
+                            ${buttonHtml}
+                        </div>
+                    </div>`;
+                });
+            }
+        }
+
+        function openChapterView(key, title) {
+            document.getElementById('booksGrid').style.display = "none";
+            document.getElementById('mathSpecialContainer').style.display = "none";
+            document.getElementById('chapterActiveSection').style.display = "flex";
+            
+            const chapterList = document.getElementById('chapterList');
+            chapterList.innerHTML = "";
+            const chapters = chapterData[key];
+
+            document.getElementById('activeSectionTitle').innerHTML = `${title} <span>CHAPTERS</span>`;
+            
+            chapters.forEach((ch, i) => {
+                let action = `triggerDownloadProgress('${ch.link}', '${ch.title}')`;
+                
+                chapterList.innerHTML += `
+                <div class="math-chapter-item" onclick="${action}" style="animation: fadeIn 0.4s ease forwards ${i * 0.03}s; opacity:0;">
+                    <div class="math-chapter-left">
+                        <img src="${ch.img}" class="math-chapter-img" onerror="this.src='a.png'">
+                        <div class="math-chapter-info">
+                            <div class="math-chapter-title">${ch.title}</div>
+                            <div class="math-chapter-desc">${ch.desc}</div>
+                        </div>
+                    </div>
+                    <div class="math-chapter-right">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                </div>`;
+            });
+        }
+
+        function backToMainView() {
+            document.getElementById('chapterActiveSection').style.display = "none";
+            if(currentCategory === "MATHS SPECIAL" || currentCategory === "chapters_lock") {
+                document.getElementById('mathSpecialContainer').style.display = "flex";
+            } else {
+                document.getElementById('booksGrid').style.display = "grid";
+            }
+        }
+
+        function triggerDownloadProgress(link, title) {
+            const overlay = document.getElementById('progressOverlay');
+            const counter = document.getElementById('progressCounter');
+            overlay.classList.add('active');
+            
+            let currentPercent = 1;
+            let interval = setInterval(() => {
+                counter.innerText = currentPercent + "%";
+                currentPercent += 2; 
+                
+                if(currentPercent > 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        overlay.classList.remove('active');
+                        evaluateLink(link, title);
+                    }, 300);
+                }
+            }, 20);
+        }
+
+        function evaluateLink(link, title) {
+            if(!link || link.trim() === "" || link.trim() === "#") {
+                document.getElementById('alertMsg').innerHTML = `<b>Notice:</b> The PDF link for <span style="color:var(--gold); font-weight:800;">"${title}"</span> will be updated soon by Student Tutorial.`;
+                document.getElementById('alertModal').classList.add('show');
+            } else {
+                let embedLink = link;
+                if (link.includes("drive.google.com") && link.includes("/view")) {
+                    embedLink = link.replace(/\/view.*$/, "/preview");
+                }
+                
+                document.getElementById('pdfViewerTitle').innerText = title;
+                document.getElementById('pdfIframe').src = embedLink;
+                document.getElementById('pdfViewerWrapper').classList.add('active');
+                document.body.style.overflow = 'hidden'; 
+            }
+        }
+
+        function closePdfViewer() {
+            document.getElementById('pdfViewerWrapper').classList.remove('active');
+            document.getElementById('pdfIframe').src = "";
+            document.body.style.overflow = 'auto'; 
+        }
+
+        document.getElementById('studentPasscode').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                verifyCode();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.getElementById('categoryTabs').children;
+            selectCategory('HOME', tabs[0]);
+        });
+    </script>
+</body>
+</html>
