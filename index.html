@@ -41,6 +41,9 @@
         @keyframes popUp { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        /* Typewriter Cursor Blink */
+        @keyframes blink-caret { 50% { border-color: transparent; } }
 
         /* ================= OFFLINE OVERLAY ================= */
         .offline-overlay {
@@ -78,7 +81,15 @@
             background: url('s.png') center/contain no-repeat; background-color: #fff;
             box-shadow: 0 0 30px rgba(0, 229, 255, 0.4); z-index: 2;
         }
-        .splash-text { color: #fff; font-size: 2.5rem; margin-top: 25px; letter-spacing: 3px; text-shadow: 0 0 15px rgba(255,255,255,0.3); }
+        
+        .splash-text { 
+            color: #fff; font-size: 2.5rem; margin-top: 25px; letter-spacing: 3px; 
+            text-shadow: 0 0 15px rgba(255,255,255,0.3);
+            border-right: 3px solid var(--theme-accent); 
+            padding-right: 5px;
+            animation: blink-caret 0.75s step-end infinite;
+            min-height: 50px;
+        }
         .splash-sub { color: var(--theme-accent); font-size: 1.1rem; font-weight: 700; margin-top: 5px; letter-spacing: 2px; }
 
         /* ================= CUSTOM ALERT BOX ================= */
@@ -170,6 +181,7 @@
             color: #f8fafc; font-size: 0.82rem; margin-bottom: 10px; 
             display: flex; align-items: center; gap: 12px; text-transform: none;
             padding-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1);
+            cursor: pointer;
         }
         .sidebar-contact .contact-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
         .sidebar-contact .contact-item i { 
@@ -185,7 +197,11 @@
         .slider-section { padding: 20px 0 10px; position: relative; }
         .slider-wrapper { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; padding: 0 5%; scrollbar-width: none; scroll-behavior: smooth; }
         .slider-wrapper::-webkit-scrollbar { display: none; }
-        .banner-slide { min-width: 90vw; aspect-ratio: 2 / 1; border-radius: 14px; scroll-snap-align: center; background-size: cover; background-position: center; box-shadow: var(--card-shadow); border: 2px solid var(--border-dark); }
+        .banner-slide { 
+            min-width: 90vw; aspect-ratio: 2 / 1; border-radius: 14px; scroll-snap-align: center; 
+            background-size: cover; background-position: center; box-shadow: var(--card-shadow); 
+            border: 2px solid var(--border-dark); cursor: pointer; 
+        }
         @media(min-width: 768px){ .banner-slide { min-width: 65vw;} }
         
         .dots-container { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
@@ -211,14 +227,9 @@
 
         .course-card { 
             background: linear-gradient(145deg, #151c2f, #090d16); 
-            border-radius: 16px; 
-            border: 1px solid var(--border-dark); 
-            box-shadow: var(--card-shadow); 
-            overflow: hidden; /* Ensures image doesn't break rounded corners */
-            position: relative; 
-            transition: 0.3s; 
-            display: flex;
-            flex-direction: column;
+            border-radius: 16px; border: 1px solid var(--border-dark); 
+            box-shadow: var(--card-shadow); overflow: hidden; position: relative; 
+            transition: 0.3s; display: flex; flex-direction: column;
         }
         .course-card:hover { border-color: var(--theme-accent); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0, 229, 255, 0.15);}
         
@@ -226,32 +237,16 @@
         .badge-tag { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.75); color: var(--theme-accent); padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: 800; z-index: 10; border: 1px solid var(--theme-accent);}
 
         /* ================= FULL SIZE A4 COURSE BANNER ================= */
-        .course-slider-container { 
-            position: relative; 
-            width: 100%; 
-            padding: 0; /* Important: removes side padding to make it full width */
-        }
-        
+        .course-slider-container { position: relative; width: 100%; padding: 0; }
         .course-banner-wrapper { 
-            width: 100%; 
-            max-width: 100%; /* Spans full card width */
-            aspect-ratio: 1 / 1.414; /* A4 aspect ratio */
-            margin: 0;
-            border-radius: 16px 16px 0 0; /* Rounds top corners to match card */
-            border: none; 
-            border-bottom: 3px solid var(--theme-accent); 
+            width: 100%; max-width: 100%; aspect-ratio: 1 / 1.414; margin: 0;
+            border-radius: 16px 16px 0 0; border: none; border-bottom: 3px solid var(--theme-accent); 
             background: #000; overflow-x: auto; overflow-y: hidden; position: relative; 
             scroll-snap-type: x mandatory; scrollbar-width: none; 
         }
         .course-banner-wrapper::-webkit-scrollbar { display: none; }
         .course-banner-track { display: flex; width: 200%; height: 100%; }
-        .course-banner-track img { 
-            width: 50%; /* Since track is 200%, 50% equals full wrapper width */
-            height: 100%; 
-            object-fit: fill; /* Forces image to stretch and cover entirely */
-            display: block; 
-            scroll-snap-align: start; 
-        }
+        .course-banner-track img { width: 50%; height: 100%; object-fit: fill; display: block; scroll-snap-align: start; }
         
         .course-swipe-hint {
             position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.7); color: var(--pure-white);
@@ -333,7 +328,7 @@
     <!-- SPLASH SCREEN -->
     <div id="splashScreen" class="splash-screen">
         <div class="splash-logo-wrapper"><div class="splash-logo-box"></div></div>
-        <h2 class="splash-text">LAKSHAY TUTORIAL</h2>
+        <h2 class="splash-text" id="splashText"></h2>
         <p class="splash-sub">THE PATH OF EXCELLENCE</p>
     </div>
 
@@ -367,7 +362,7 @@
         <div class="marquee-text">
             <span><i class="fas fa-star"></i> SANKALP & LAKSHYA BATCH STARTING SOON</span>
             <span><i class="fas fa-fire"></i> FLAT 50% OFF USING CODE 'STUDENT50'</span>
-            <span><i class="fas fa-bullhorn"></i> NEW PRAVAH BATCH LIVE NOW 👉 SUBSCRIBE NOW ABHINAY CHAUBEY MATHS</span>
+            <span><i class="fas fa-bullhorn"></i> NEW PRAVAH BATCH LIVE NOW 👉 <a href="https://www.youtube.com/@abhinaypratapmaths" target="_blank" style="color:#00e5ff; text-decoration:none;">SUBSCRIBE NOW ABHINAY CHAUBEY MATHS</a></span>
         </div>
     </div>
 
@@ -381,9 +376,10 @@
         <div class="sidebar-section-title">QUICK LINKS</div>
         <ul>
             <li><a href="#" onclick="toggleMenu()"><i class="fas fa-home"></i> HOME DASHBOARD</a></li>
-            <li><a href="t.html" onclick="toggle Menu()"><i class="fas fa-user-circle"></i> FACULTIES</a></li>
-            <li><a href="pdf.html" onclick="toggle Menu ()"><i class="fas fa-file-pdf"></i> PDF MATERIAL</a></li>
-            <li><a href="e.html" onclick="toggle Menu ()"><i class="fas fa-book"></i> E-BOOK STORE</a></li>
+            <li><a href="https://www.youtube.com/@mathsmystic" target="_blank"><i class="fab fa-youtube" style="background: #ff0000; color: #fff; border-color: #ff0000;"></i> YOUTUBE CHANNEL</a></li>
+            <li><a href="t.html" onclick="toggleMenu()"><i class="fas fa-user-circle"></i> FACULTIES</a></li>
+            <li><a href="pdf.html" onclick="toggleMenu()"><i class="fas fa-file-pdf"></i> PDF MATERIAL</a></li>
+            <li><a href="e.html" onclick="toggleMenu()"><i class="fas fa-book"></i> E-BOOK STORE</a></li>
         </ul>
 
         <div class="sidebar-section-title">LEGAL & POLICIES</div>
@@ -409,7 +405,14 @@
                     +91 9670078465
                 </div>
             </div>
-            <div class="contact-item">
+            <div class="contact-item" onclick="window.open('https://www.youtube.com/@abhinaypratapmaths', '_blank')">
+                <i class="fab fa-youtube" style="background: #ff0000;"></i>
+                <div>
+                    <strong style="display:block; color:#fff; font-size:0.75rem; letter-spacing:0.5px;">YOUTUBE</strong>
+                    Abhinay Pratap Maths
+                </div>
+            </div>
+            <div class="contact-item" style="border-bottom: none;">
                 <i class="fas fa-envelope"></i>
                 <div>
                     <strong style="display:block; color:#fff; font-size:0.75rem; letter-spacing:0.5px;">EMAIL ID</strong>
@@ -419,18 +422,18 @@
         </div>
     </div>
 
-    <!-- 6 BANNER SLIDER -->
+    <!-- 6 BANNER SLIDER WITH LINK FUNCTION -->
     <section class="slider-section">
         <div class="slider-wrapper" id="mainSliderWrapper">
-            <div class="banner-slide" style="background-image: url('maths.png');"></div>
-            <div class="banner-slide" style="background-image: url('slider2.png');"></div>
-            <div class="banner-slide" style="background-image: url('slider3.png');"></div>
-            <div class="banner-slide" style="background-image: url('slider4.png');"></div>
-            <div class="banner-slide" style="background-image: url('s5.png');"></div>
-            <div class="banner-slide" style="background-image: url('s6.png');"></div>
-            <div class="banner-slide" style="background-image: url('s7.png');"></div>
-            <div class="banner-slide" style="background-image: url('s7.png');"></div>
-             <div class="banner-slide" style="background-image: url('e.png');"></div>
+            <div class="banner-slide" style="background-image: url('maths.png');" onclick="handleBannerClick('#')"></div>
+            <div class="banner-slide" style="background-image: url('slider2.png');" onclick="handleBannerClick('#')"></div>
+            <div class="banner-slide" style="background-image: url('slider3.png');" onclick="handleBannerClick('#')"></div>
+            <div class="banner-slide" style="background-image: url('slider4.png');" onclick="handleBannerClick('#')"></div>
+            <div class="banner-slide" style="background-image: url('s5.png');" onclick="handleBannerClick('#')"></div>
+            <div class="banner-slide" style="background-image: url('s6.png');" onclick="handleBannerClick('#')"></div>
+            <div class="banner-slide" style="background-image: url('s7.png');" onclick="handleBannerClick('https://peerseek.io/abhinaychaubey/products/Bzlh7f/jnvst-vi-maths-mystic-e-book')"></div>
+            <div class="banner-slide" style="background-image: url('s7.png');" onclick="handleBannerClick('https://peerseek.io/abhinaychaubey/products/Bzlh7f/jnvst-vi-maths-mystic-e-book')"></div>
+            <div class="banner-slide" style="background-image: url('e.png');" onclick="handleBannerClick('#')"></div>
         </div>
         <div class="dots-container" id="mainDotsContainer">
             <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
@@ -721,14 +724,14 @@
     <!-- 5 BOTTOM APP NAVIGATION -->
     <div class="bottom-nav">
         <a href="#" class="nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="e.html" class="nav-item" onclick="toggle menu ( )"><i class="fas fa-book-open"></i><span>E- BOOK</span></a>
+        <a href="e.html" class="nav-item" onclick="toggleMenu()"><i class="fas fa-book-open"></i><span>E- BOOK</span></a>
         
         <a href="#" class="nav-item qr-nav-btn" onclick="openQuickPay()">
             <i class="fas fa-qrcode"></i><span>Pay</span>
         </a>
 
-        <a href="pdf.html" class="nav-item" onclick="toggle menu( )"><i class="fas fa-file-alt"></i><span>Notes</span></a>
-        <a href="t.html" class="nav-item" onclick="toggle menu( )"><i class="fas fa-user-circle"></i><span>FACULTIES</span></a>
+        <a href="pdf.html" class="nav-item" onclick="toggleMenu()"><i class="fas fa-file-alt"></i><span>Notes</span></a>
+        <a href="t.html" class="nav-item" onclick="toggleMenu()"><i class="fas fa-user-circle"></i><span>FACULTIES</span></a>
     </div>
 
     <!-- ================= PAYMENT MODALS ================= -->
@@ -820,16 +823,53 @@
                 <div class="input-group">
                     <label>14 DIGIT UTR NO.</label>
                     <input type="text" id="utrNumber" placeholder="e.g. PM1234..." maxlength="14">
-                    <span class="msg error" id="utrError" style="color:red;"></span>
+                    <span class="msg error" id="utrError" style="color:red; font-size: 0.8rem; font-weight: 700;"></span>
                 </div>
                 <button class="submit-btn" onclick="verifyUTR()">VERIFY PAYMENT</button>
             </div>
         </div>
 
+        <!-- ================= NEW STEP 2: RECEIPT MODAL ================= -->
+        <div class="payment-modal" id="receiptModal">
+            <div class="modal-header" style="background: var(--green-wa); border-bottom: none;">
+                <h3>PAYMENT SUCCESSFUL</h3><span class="close-modal" onclick="closePayment()">&times;</span>
+            </div>
+            <div class="modal-body" id="receiptContent" style="background: #fff; padding: 30px; text-align: center; border-radius: 0 0 16px 16px;">
+                <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--green-wa); margin-bottom: 15px;"></i>
+                <h2 style="color: #090d16; font-family: 'Oswald'; margin-bottom: 5px; font-size: 1.8rem; letter-spacing: 1px;">LAKSHAY TUTORIAL</h2>
+                <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px; font-weight: 700;">PAYMENT RECEIPT</p>
+                
+                <div style="border-top: 2px dashed #cbd5e1; border-bottom: 2px dashed #cbd5e1; padding: 15px 0; margin-bottom: 20px; text-align: left;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="color: #64748b; font-weight: 700;">Date & Time:</span>
+                        <span style="color: #090d16; font-weight: 800;" id="receiptDate">...</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="color: #64748b; font-weight: 700;">Batch Details:</span>
+                        <span style="color: #090d16; font-weight: 800; max-width: 60%; text-align: right;" id="receiptBatch">...</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="color: #64748b; font-weight: 700;">UTR No:</span>
+                        <span style="color: #090d16; font-weight: 800;" id="receiptUTR">...</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 1.2rem;">
+                        <span style="color: #090d16; font-weight: 800;">Amount Paid:</span>
+                        <span style="color: var(--green-wa); font-weight: 900;">₹<span id="receiptAmount">0</span></span>
+                    </div>
+                </div>
+                <p style="font-size: 0.85rem; color: #475569; font-weight: 600; line-height: 1.4;">Your dashboard access will be granted within 2-4 hours after backend verification.</p>
+                <div style="font-size: 0.7rem; color: #94a3b8; margin-top: 15px;">System Generated Receipt</div>
+            </div>
+            <button class="submit-btn" style="border-radius: 0 0 16px 16px; margin-top: 0; background: #090d16; border-top: 2px solid var(--green-wa);" onclick="downloadReceipt()">
+                <i class="fas fa-download"></i> DOWNLOAD RECEIPT
+            </button>
+        </div>
+
     </div>
 
+    <!-- ================= MAIN JAVASCRIPT ================= -->
     <script>
-        // ================= JS SCRIPT FOR COURSE SWIPE DOTS =================
+        // --- COURSE SWIPE DOTS ---
         function updateCourseDots(el) {
             const index = Math.round(el.scrollLeft / el.clientWidth);
             const dots = el.parentElement.querySelectorAll('.course-slider-dots .dot');
@@ -837,7 +877,7 @@
             if(dots[index]) dots[index].classList.add('active');
         }
 
-        // ================= OFFLINE / ONLINE CHECKER =================
+        // --- OFFLINE / ONLINE CHECKER ---
         const offlineOverlay = document.getElementById('offlineOverlay');
         window.addEventListener('offline', () => { offlineOverlay.classList.add('active'); });
         window.addEventListener('online', () => { offlineOverlay.classList.remove('active'); });
@@ -847,7 +887,26 @@
         }
         if (!navigator.onLine) { offlineOverlay.classList.add('active'); }
 
-        // ================= SPLASH SCREEN REMOVE =================
+        // --- SPLASH SCREEN TYPEWRITER & REMOVE (FIXED) ---
+        const splashTextContent = "LAKSHAY TUTORIAL";
+        let typeIndex = 0;
+        
+        // Removed window.onload dependency so it runs immediately
+        function typeWriter() {
+            if (typeIndex < splashTextContent.length) {
+                const splashEl = document.getElementById("splashText");
+                if(splashEl) {
+                    splashEl.innerHTML += splashTextContent.charAt(typeIndex);
+                }
+                typeIndex++;
+                setTimeout(typeWriter, 100); // 100ms per character
+            }
+        }
+        
+        // Start typewriter immediately
+        typeWriter();
+        
+        // Hide splash screen after exactly 3.2 seconds
         setTimeout(() => {
             const splash = document.getElementById('splashScreen');
             if(splash) {
@@ -855,12 +914,12 @@
                 splash.style.visibility = 'hidden';
                 setTimeout(() => splash.remove(), 600);
             }
-        }, 2200);
+        }, 3200); 
 
-        // ================= INACTIVE ALERT & MENU =================
+        // --- INACTIVE ALERT & MENU ---
         function showInactiveAlert() {
             if(document.getElementById('sidebar').classList.contains('active')) toggleMenu();
-            document.getElementById('customAlertMessage').innerText = "Link is currently not active. Please wait for the update.";
+            document.getElementById('customAlertMessage').innerText = "Link is not active yet.";
             document.getElementById('customAlert').style.display = 'flex';
         }
         function closeCustomAlert() { document.getElementById('customAlert').style.display = 'none'; }
@@ -870,21 +929,32 @@
             document.getElementById('hamMenu').classList.toggle('active');
         }
 
-        // ================= 6 SLIDER & DOTS SYNC =================
+        // --- BANNER LINK HANDLER ---
+        function handleBannerClick(url) {
+            if(url && url !== '#') {
+                window.location.href = url; 
+            } else {
+                showInactiveAlert(); 
+            }
+        }
+
+        // --- BANNER SLIDER & DOTS SYNC ---
         const sliderWrapper = document.getElementById('mainSliderWrapper');
         const dots = document.querySelectorAll('#mainDotsContainer .dot');
-        sliderWrapper.addEventListener('scroll', () => {
-            let index = Math.round(sliderWrapper.scrollLeft / sliderWrapper.clientWidth);
-            dots.forEach(d => d.classList.remove('active'));
-            if(dots[index]) dots[index].classList.add('active');
-        });
-        setInterval(() => { 
-            let maxScroll = sliderWrapper.scrollWidth - sliderWrapper.clientWidth;
-            if(sliderWrapper.scrollLeft >= maxScroll - 10) sliderWrapper.scrollTo({ left: 0, behavior: 'smooth' });
-            else sliderWrapper.scrollBy({ left: sliderWrapper.clientWidth, behavior: 'smooth' }); 
-        }, 4000);
+        if(sliderWrapper && dots.length > 0) {
+            sliderWrapper.addEventListener('scroll', () => {
+                let index = Math.round(sliderWrapper.scrollLeft / sliderWrapper.clientWidth);
+                dots.forEach(d => d.classList.remove('active'));
+                if(dots[index]) dots[index].classList.add('active');
+            });
+            setInterval(() => { 
+                let maxScroll = sliderWrapper.scrollWidth - sliderWrapper.clientWidth;
+                if(sliderWrapper.scrollLeft >= maxScroll - 10) sliderWrapper.scrollTo({ left: 0, behavior: 'smooth' });
+                else sliderWrapper.scrollBy({ left: sliderWrapper.clientWidth, behavior: 'smooth' }); 
+            }, 4000);
+        }
 
-        // ================= FEATURES TOGGLE =================
+        // --- FEATURES TOGGLE ---
         function toggleFeatures(btn) {
             let card = btn.closest('.course-card');
             let box = card.querySelector('.features-box');
@@ -905,13 +975,14 @@
             }
         }
 
-        // ================= PAYMENT LOGIC =================
+        // --- PAYMENT LOGIC ---
         let currentBatch = ""; let originalPrice = 0; let finalPrice = 0; let couponApplied = false;
 
         function openQuickPay() {
             document.getElementById('paymentOverlay').style.display = 'flex';
             document.getElementById('quickPayModal').style.display = 'flex';
             document.getElementById('step1Modal').style.display = 'none';
+            document.getElementById('receiptModal').style.display = 'none';
             calculateQuickPay();
         }
 
@@ -934,7 +1005,7 @@
             let hasRegFee = document.getElementById('regFeeCheck').checked;
             let regFee = hasRegFee ? 100 : 0;
             
-            let finalName = hasRegFee ? baseBatchName + " + REGISTRATION" : baseBatchName;
+            let finalName = hasRegFee ? baseBatchName + " + REG" : baseBatchName;
             let totalAmount = basePrice + regFee; 
 
             document.getElementById('quickPayModal').style.display = 'none';
@@ -946,16 +1017,23 @@
             document.getElementById('checkoutBatchName').innerText = batchName;
             document.getElementById('checkoutPrice').innerText = price;
             document.getElementById('couponCode').value = ""; document.getElementById('couponMsg').innerText = "";
-            document.getElementById('utrNumber').value = ""; document.getElementById('dynamicQrImage').style.display = 'none';
+            document.getElementById('utrNumber').value = ""; document.getElementById('utrError').innerText = "";
+            document.getElementById('dynamicQrImage').style.display = 'none';
             
             switchPayTab('dynamic'); initScratchCard();
             
             document.getElementById('paymentOverlay').style.display = 'flex';
             document.getElementById('quickPayModal').style.display = 'none';
+            document.getElementById('receiptModal').style.display = 'none';
             document.getElementById('step1Modal').style.display = 'flex';
         }
 
-        function closePayment() { document.getElementById('paymentOverlay').style.display = 'none'; }
+        function closePayment() { 
+            document.getElementById('paymentOverlay').style.display = 'none';
+            document.getElementById('quickPayModal').style.display = 'none';
+            document.getElementById('step1Modal').style.display = 'none';
+            document.getElementById('receiptModal').style.display = 'none';
+        }
 
         function switchPayTab(tab) {
             document.querySelectorAll('.pay-opt-btn').forEach(btn => btn.classList.remove('active'));
@@ -978,7 +1056,7 @@
             if (couponApplied) { msg.innerText = "ALREADY APPLIED!"; msg.style.color = "red"; return; }
             
             if (code === "STUDENT50") {
-                finalPrice = Math.round(originalPrice * 0.50); // 50% DISCOUNT
+                finalPrice = Math.round(originalPrice * 0.50); 
                 document.getElementById('checkoutPrice').innerText = finalPrice;
                 msg.innerText = "COUPON APPLIED! 50% OFF."; msg.style.color = "green"; 
                 couponApplied = true;
@@ -986,17 +1064,53 @@
             } else { msg.innerText = "INVALID CODE!"; msg.style.color = "red"; }
         }
 
+        // --- VERIFY UTR & GENERATE RECEIPT ---
         function verifyUTR() {
             let utr = document.getElementById('utrNumber').value.toUpperCase().trim();
+            let errorBox = document.getElementById('utrError');
+            
             if (utr.length >= 10) { 
-                alert(`SUCCESS: Payment UTR [${utr}] verified for ${currentBatch}. Dashboard access will be granted soon!`);
-                closePayment();
-            } else { document.getElementById('utrError').innerText = "Invalid UTR NO."; }
+                errorBox.innerText = "";
+                
+                let d = new Date();
+                let dateString = d.toLocaleDateString('en-GB') + " | " + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                
+                document.getElementById('receiptDate').innerText = dateString;
+                document.getElementById('receiptBatch').innerText = currentBatch;
+                document.getElementById('receiptUTR').innerText = utr;
+                document.getElementById('receiptAmount').innerText = finalPrice;
+
+                document.getElementById('step1Modal').style.display = 'none';
+                document.getElementById('receiptModal').style.display = 'flex';
+
+            } else { 
+                errorBox.innerText = "Invalid UTR NO. Please enter correct 12-14 digit UTR/Ref No."; 
+            }
         }
 
-        // SCRATCH CARD
+        // --- DOWNLOAD RECEIPT FUNCTION ---
+        function downloadReceipt() {
+            const receiptElement = document.getElementById('receiptContent');
+            
+            html2canvas(receiptElement, {
+                scale: 2, 
+                backgroundColor: "#ffffff",
+                useCORS: true
+            }).then(canvas => {
+                let link = document.createElement('a');
+                link.download = `Lakshay_Tutorial_Receipt_${document.getElementById('receiptUTR').innerText}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                alert("Failed to download receipt. Please take a screenshot.");
+                console.error("Receipt Download Error: ", err);
+            });
+        }
+
+        // --- SCRATCH CARD ---
         function initScratchCard() {
             const canvas = document.getElementById('scratchCanvas');
+            if(!canvas) return;
             const ctx = canvas.getContext('2d');
             let isDrawing = false;
             ctx.globalCompositeOperation = 'source-over';
