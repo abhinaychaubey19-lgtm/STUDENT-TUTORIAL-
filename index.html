@@ -41,8 +41,7 @@
         @keyframes popUp { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        /* Typewriter Cursor Blink */
+        @keyframes pulseIcon { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
         @keyframes blink-caret { 50% { border-color: transparent; } }
 
         /* ================= OFFLINE OVERLAY ================= */
@@ -208,15 +207,6 @@
         .dots-container .dot { width: 10px; height: 10px; background: #334155; border-radius: 50%; transition: 0.3s; cursor: pointer; }
         .dots-container .dot.active { background: var(--theme-accent); width: 25px; border-radius: 5px; box-shadow: 0 0 10px var(--theme-accent);}
 
-        /* ================= 5 BOTTOM APP NAVIGATION ================= */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: rgba(9, 13, 22, 0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-around; align-items: center; z-index: 4000; box-shadow: 0 -5px 20px rgba(0,0,0,0.5); }
-        .nav-item { color: #94a3b8; display: flex; flex-direction: column; align-items: center; text-decoration: none; font-size: 0.7rem; gap: 6px; font-weight: 700; transition: 0.3s; width: 20%;}
-        .nav-item i { font-size: 1.3rem; transition: 0.3s;}
-        .nav-item.active, .nav-item:hover { color: var(--theme-primary); }
-        
-        .qr-nav-btn { background: linear-gradient(135deg, var(--theme-primary), #ff8c00); width: 65px; height: 65px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #fff !important; transform: translateY(-25px); box-shadow: 0 10px 25px rgba(255,107,0,0.6); border: 5px solid #090d16; gap: 2px; }
-        .qr-nav-btn i { font-size: 1.6rem; margin-bottom: 2px;}
-
         /* ================= 8 COURSES GRID ================= */
         .courses-section { padding: 10px 5% 40px; max-width: 1200px; margin: 0 auto; }
         .section-header { text-align: left; margin-bottom: 20px; padding-left: 15px; border-left: 6px solid var(--theme-primary); }
@@ -273,6 +263,46 @@
         .features-box ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
         .features-box ul li { font-size: 0.9rem; font-weight: 500; display: flex; align-items: flex-start; gap: 10px; color: #e2e8f0; text-transform: none; line-height: 1.4;}
         .features-box ul li i { color: var(--theme-primary); font-size: 1.1rem; margin-top: 1px;}
+
+        /* ================= 5 BOTTOM APP NAVIGATION (FIXED PREMIUM WIDTH) ================= */
+        .bottom-nav { 
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 75px; 
+            background: rgba(9, 13, 22, 0.98); backdrop-filter: blur(15px); 
+            border-top: 2px solid rgba(0, 229, 255, 0.2); 
+            display: flex; justify-content: space-around; align-items: center; 
+            z-index: 4000; box-shadow: 0 -5px 25px rgba(0,0,0,0.8);
+            border-radius: 16px 16px 0 0; /* Premium slightly rounded top */
+        }
+        .nav-item { 
+            color: #94a3b8; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-decoration: none; font-size: 0.65rem; gap: 6px; font-weight: 800; 
+            transition: 0.3s; width: 20%; 
+        }
+        .nav-item i { font-size: 1.4rem; transition: 0.3s; }
+        
+        .nav-item.active, .nav-item:hover { color: var(--theme-accent); }
+        .nav-item.active i, .nav-item:hover i { 
+            transform: translateY(-3px); color: var(--theme-accent); 
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5); 
+        }
+
+        /* Center QR Pay Button */
+        .qr-nav-btn { 
+            background: linear-gradient(135deg, var(--theme-primary), #ff8c00); 
+            width: 65px; height: 65px; border-radius: 50%; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            color: #fff !important; text-decoration: none;
+            transform: translateY(-25px); /* Floating effect outside the bar */
+            box-shadow: 0 10px 25px rgba(255,107,0,0.5); 
+            border: 5px solid #090d16; gap: 2px; transition: 0.3s;
+        }
+        .qr-nav-btn:hover { 
+            transform: translateY(-28px) scale(1.05); 
+            box-shadow: 0 15px 30px rgba(255,107,0,0.7); 
+            border-color: #151c2f;
+        }
+        .qr-nav-btn i { font-size: 1.6rem; margin-bottom: 2px; animation: pulseIcon 2s infinite;}
+        .qr-nav-btn span { font-size: 0.65rem; font-weight: 800; letter-spacing: 1px;}
 
         /* ================= PAYMENT MODALS ================= */
         .payment-overlay { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.9); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 5000; padding: 15px; overflow-y: auto; color: #090d16; }
@@ -331,6 +361,13 @@
         <h2 class="splash-text" id="splashText"></h2>
         <p class="splash-sub">THE PATH OF EXCELLENCE</p>
     </div>
+    
+    <!-- SPLASH SCREEN LOGIC FIX -->
+    <script>
+        if (sessionStorage.getItem('splashShown')) {
+            document.getElementById('splashScreen').style.display = 'none';
+        }
+    </script>
 
     <!-- CUSTOM INACTIVE LINK ALERT -->
     <div id="customAlert" class="custom-alert-overlay" onclick="closeCustomAlert()">
@@ -425,7 +462,7 @@
     <!-- 6 BANNER SLIDER WITH LINK FUNCTION -->
     <section class="slider-section">
         <div class="slider-wrapper" id="mainSliderWrapper">
-            <div class="banner-slide" style="background-image: url('maths.png');" onclick="handleBannerClick('#')"></div>
+            <div class="banner-slide" style="background-image: url('abhi.png');" onclick="handleBannerClick('#')"></div>
             <div class="banner-slide" style="background-image: url('slider2.png');" onclick="handleBannerClick('#')"></div>
             <div class="banner-slide" style="background-image: url('slider3.png');" onclick="handleBannerClick('#')"></div>
             <div class="banner-slide" style="background-image: url('slider4.png');" onclick="handleBannerClick('#')"></div>
@@ -455,8 +492,8 @@
                     <div class="course-swipe-hint">SWIPE <i class="fas fa-arrows-alt-h"></i></div>
                     <div class="course-banner-wrapper" onscroll="updateCourseDots(this)">
                         <div class="course-banner-track">
-                            <img src="maths_1.png" alt="Banner 1" onerror="this.src='maths.png'">
-                            <img src="maths_2.png" alt="Banner 2" onerror="this.src='maths.png'">
+                            <img src="maths_1.png" alt="Banner 1" onerror="this.src='m.png'">
+                            <img src="maths_2.png" alt="Banner 2" onerror="this.src='m.png'">
                         </div>
                     </div>
                     <div class="course-slider-dots">
@@ -721,17 +758,32 @@
         </div>
     </section>
 
-    <!-- 5 BOTTOM APP NAVIGATION -->
+    <!-- 5 BOTTOM APP NAVIGATION (FIXED FULL WIDTH PREMIUM) -->
     <div class="bottom-nav">
-        <a href="#" class="nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="e.html" class="nav-item" onclick="toggleMenu()"><i class="fas fa-book-open"></i><span>E- BOOK</span></a>
+        <!-- Dashboard / Home Link -->
+        <a href="index.html" class="nav-item active">
+            <i class="fas fa-home"></i><span>HOME</span>
+        </a>
         
+        <!-- E-Book Link -->
+        <a href="e.html" class="nav-item">
+            <i class="fas fa-book-open"></i><span>E-BOOK</span>
+        </a>
+        
+        <!-- Floating Center QR / Pay Button -->
         <a href="#" class="nav-item qr-nav-btn" onclick="openQuickPay()">
-            <i class="fas fa-qrcode"></i><span>Pay</span>
+            <i class="fas fa-qrcode"></i><span>PAY</span>
         </a>
 
-        <a href="pdf.html" class="nav-item" onclick="toggleMenu()"><i class="fas fa-file-alt"></i><span>Notes</span></a>
-        <a href="t.html" class="nav-item" onclick="toggleMenu()"><i class="fas fa-user-circle"></i><span>FACULTIES</span></a>
+        <!-- Notes / PDF Link -->
+        <a href="pdf.html" class="nav-item">
+            <i class="fas fa-file-pdf"></i><span>NOTES</span>
+        </a>
+        
+        <!-- Faculties Link -->
+        <a href="t.html" class="nav-item">
+            <i class="fas fa-user-circle"></i><span>TEACHERS</span>
+        </a>
     </div>
 
     <!-- ================= PAYMENT MODALS ================= -->
@@ -887,34 +939,35 @@
         }
         if (!navigator.onLine) { offlineOverlay.classList.add('active'); }
 
-        // --- SPLASH SCREEN TYPEWRITER & REMOVE (FIXED) ---
+        // --- SPLASH SCREEN LOGIC (Runs ONLY ONCE per session) ---
+        const splashScreen = document.getElementById('splashScreen');
         const splashTextContent = "LAKSHAY TUTORIAL";
         let typeIndex = 0;
-        
-        // Removed window.onload dependency so it runs immediately
-        function typeWriter() {
-            if (typeIndex < splashTextContent.length) {
-                const splashEl = document.getElementById("splashText");
-                if(splashEl) {
-                    splashEl.innerHTML += splashTextContent.charAt(typeIndex);
+
+        if (!sessionStorage.getItem('splashShown')) {
+            // Agar first time load ho raha hai to splash screen dikhao
+            sessionStorage.setItem('splashShown', 'true');
+            
+            function typeWriter() {
+                if (typeIndex < splashTextContent.length) {
+                    const splashEl = document.getElementById("splashText");
+                    if(splashEl) {
+                        splashEl.innerHTML += splashTextContent.charAt(typeIndex);
+                    }
+                    typeIndex++;
+                    setTimeout(typeWriter, 100); 
                 }
-                typeIndex++;
-                setTimeout(typeWriter, 100); // 100ms per character
             }
+            typeWriter();
+            
+            setTimeout(() => {
+                if(splashScreen) {
+                    splashScreen.style.opacity = '0';
+                    splashScreen.style.visibility = 'hidden';
+                    setTimeout(() => splashScreen.style.display = 'none', 600);
+                }
+            }, 3200); 
         }
-        
-        // Start typewriter immediately
-        typeWriter();
-        
-        // Hide splash screen after exactly 3.2 seconds
-        setTimeout(() => {
-            const splash = document.getElementById('splashScreen');
-            if(splash) {
-                splash.style.opacity = '0';
-                splash.style.visibility = 'hidden';
-                setTimeout(() => splash.remove(), 600);
-            }
-        }, 3200); 
 
         // --- INACTIVE ALERT & MENU ---
         function showInactiveAlert() {
